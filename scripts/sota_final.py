@@ -41,7 +41,7 @@ from active_segmenter.eval.registry import PANEL  # noqa: E402
 
 # Derived from the registry, never hand-maintained: a hand-written list silently drops any
 # dataset missing from it (written to disk, absent from every table and paired test).
-PANEL_DATASETS = list(PANEL)  # + 4 public (WACV P0-4)
+PANEL_DATASETS = list(PANEL)  # includes the 4 auto-prepared public datasets
 SCORE_DIR_DEFAULT = "results/scores"
 
 

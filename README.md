@@ -61,7 +61,41 @@ Baseline reproduction needs additional, mutually conflicting packages; see
 `requirements-baselines.txt` and install each baseline family in its own environment, as the paper's
 fairness protocol requires.
 
-## Run the method
+## Use it on your own data
+
+Annotate a few images, point the script at the rest:
+
+```bash
+python scripts/predict.py --support supp/ --images raw/ --out masks/
+```
+
+`supp/` holds example pairs — an image and its mask sharing a stem, the mask carrying a `_mask`
+suffix:
+
+```
+supp/cells_01.png   supp/cells_01_mask.png
+supp/cells_02.png   supp/cells_02_mask.png
+```
+
+Masks may be binary or per-instance label maps; either is read as foreground versus background.
+Around eight examples is the operating point the paper reports — one already works, and past sixteen
+the curve is flat on most datasets. Every image in `raw/` is written to `masks/` as a PNG, and
+`--prob` additionally writes the float probability map as a TIFF for your own thresholding.
+
+Nothing needs configuring. The run prints what the method decided for itself:
+
+```
+fitting on 3 example(s) ...
+    [color_adaptive] dataset is monochrome → source=gray
+    [affinity] binary/semantic support (median max-label=1) → instance decoder inactive here
+    [corr_prior] prototypes built (fg 1241 / bg 4051 patches); fg·bg cos=0.975
+  [1/2] 03.png -> 03_mask.png (23.0% foreground)
+```
+
+Features are cached under `<out>/.feature_cache`, so a second pass over the same images is nearly
+free. Do not point two concurrent runs at one cache directory.
+
+## Run the benchmark
 
 The reported configuration is `head_fusion_best_cgate_film_nobank`.
 
@@ -111,6 +145,7 @@ output differs, that is a real discrepancy worth reporting, not a formatting art
 | `active_segmenter/encoder/dinov3.py` | Frozen DINOv3 encoder, feature super-resolution, caching |
 | `active_segmenter/eval/` | Dataset registry, metrics, scoring, score-record format |
 | `active_segmenter/acquire/` | Active-learning acquisition functions (not used in the paper; groundwork for the tool) |
+| `scripts/predict.py` | **Segment your own images from a few masks** (the use path) |
 | `scripts/sota_final.py` | Benchmark harness: multi-draw fixed-pool protocol, paired statistics |
 | `scripts/run_campaign.py`, `run_ablation.py` | The campaign and ablation launchers |
 | `scripts/make_*.py` | Paper table and figure generators |

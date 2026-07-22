@@ -11,6 +11,7 @@ scipy
 scikit-image      # Frangi ridge, Sauvola threshold, watershed, resize
 scikit-learn      # k-means + silhouette in the support-driven scale selection
 tifffile          # benchmark datasets ship as uint16 label maps
+imagecodecs       # LZW/JPEG-compressed TIFFs, which most real microscopy data is
 Pillow
 matplotlib        # figure generation only
 requests          # dataset download in scripts/prep_public_datasets.py

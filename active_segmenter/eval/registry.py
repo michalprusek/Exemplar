@@ -73,7 +73,7 @@ PANEL: dict[str, DatasetSpec] = {
                              url="https://www5.cs.fau.de/fileadmin/research/datasets/fundus-images/all.zip",
                              images_sub="images", masks_sub="manual1", metric="cldice",
                              note="retinal fundus VESSELS — THIN structures (filament proxy)"),
-    # ---- Standard public biomedical datasets (WACV panel; prep via scripts/prep_public_datasets.py) ----
+    # ---- Standard public biomedical datasets (prep via scripts/prep_public_datasets.py) ----
     "drive":     DatasetSpec("drive", "download", f"{_DL}/drive",
                              images_sub="images", masks_sub="masks", metric="cldice",
                              note="DRIVE retinal fundus VESSELS — thin tubular; HF Zomba mirror (40 imgs, 1st-manual)"),
