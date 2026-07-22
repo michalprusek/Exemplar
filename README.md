@@ -146,11 +146,13 @@ output differs, that is a real discrepancy worth reporting, not a formatting art
 | `active_segmenter/eval/` | Dataset registry, metrics, scoring, score-record format |
 | `active_segmenter/acquire/` | Active-learning acquisition functions (not used in the paper; groundwork for the tool) |
 | `scripts/predict.py` | **Segment your own images from a few masks** (the use path) |
+| `scripts/nnunet_bench.py` | nnU-Net trained on the same K support masks, as an annotation-efficiency rival |
 | `scripts/sota_final.py` | Benchmark harness: multi-draw fixed-pool protocol, paired statistics |
 | `scripts/run_campaign.py`, `run_ablation.py` | The campaign and ablation launchers |
 | `scripts/make_*.py` | Paper table and figure generators |
 | `scripts/prep_public_datasets.py` | Dataset download and preparation |
 | `results/final10/` | Score records for every cell of every reported table (398 files) |
+| `results/rescontrol/` | Resolution control: the same method at the baselines' 448-pixel input |
 | `tests/` | 285 tests, including ones that pin the ablation arms as genuinely distinct configurations |
 
 ## Datasets
