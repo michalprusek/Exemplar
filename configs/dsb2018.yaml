@@ -1,0 +1,23 @@
+# DSB2018 nuclei benchmark config (primary P1 benchmark).
+device: auto          # cuda on tulen, cpu locally
+seed: 0
+cache_dir: /disk1/prusek/active_segmenter_cache   # on tulen; override locally
+encoder:
+  model_id: facebook/dinov3-vitl16-pretrain-lvd1689m
+  resolution: 672     # 42x42 patch grid — the spike's high-res sweet spot
+  tile: false
+match:
+  topk: 5
+  bidirectional: true
+cluster:
+  algo: agglomerative
+  xy_weight: 0.3
+  min_patches: 2
+refine:
+  kind: identity      # default: no SAM (most in-context); switch to "sam" to compare
+  sam_id: facebook/sam2.1-hiera-large
+acquire:
+  strategy: epig
+  coldstart: typiclust
+  bank_cap: 64
+  diversity: kcenter

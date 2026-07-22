@@ -1,0 +1,18 @@
+# Core dependencies — everything needed to RUN Exemplar and score it.
+# Baseline reproduction needs more; see requirements-baselines.txt (separate environments).
+
+# DINOv3-L is a gated HuggingFace model requiring transformers >= 4.57. Do not casually bump the
+# torch/transformers majors: DINOv3 support is load-bearing and the method is built on its features.
+torch>=2.5
+transformers>=4.57
+
+numpy
+scipy
+scikit-image      # Frangi ridge, Sauvola threshold, watershed, resize
+scikit-learn      # k-means + silhouette in the support-driven scale selection
+tifffile          # benchmark datasets ship as uint16 label maps
+Pillow
+matplotlib        # figure generation only
+requests          # dataset download in scripts/prep_public_datasets.py
+PyYAML            # configs/
+pytest            # test suite

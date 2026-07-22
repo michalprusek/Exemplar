@@ -1,0 +1,23 @@
+# OPTIONAL — only needed to reproduce the BASELINE columns of Table 1, not to run Exemplar.
+# Several of these pin conflicting torch versions; install them in SEPARATE environments, one per
+# baseline family, exactly as the paper's fairness protocol requires (each baseline is run in the
+# environment its authors document, not in ours).
+
+# few-shot in-context baselines
+universeg            # UniverSeg (Butoi et al., ICCV'23)
+# tyche              # Tyche — install from the authors' repo, no PyPI release
+# SegGPT ships inside transformers>=4.57 (SegGptForImageSegmentation); no extra package
+
+# trained specialists
+cellpose>=4          # Cellpose-SAM (the `cpsam` model)
+stardist
+csbdeep              # StarDist dependency
+micro_sam            # micro-SAM / Segment Anything for Microscopy
+
+# SAM-based one-shot personalisation (reported as task-mismatched, not as table columns)
+# per_segment_anything  # PerSAM — install from the authors' repo
+# Matcher               # install from the authors' repo
+
+# dense-CRF refinement used to STRENGTHEN the INSID3 baseline. Without it the code refuses to run
+# (it will not silently substitute a guided filter, which would undersell that baseline).
+pydensecrf
