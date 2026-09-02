@@ -1,0 +1,74 @@
+{
+ "_what": "Measured latency of the reported method on one idle RTX A5000. Every timing number in the paper is derived from THIS file by scripts/make_timing_numbers.py; none is typed into main.tex.",
+ "_why": "The fit-cost argument is one of the paper's two main claims, and until 2026-08-01 every number behind it existed only as prose in main.tex with nothing in the repo to reproduce it. That is how the previous figures (21-701 s to fit, 2-25 ms for the head, nnU-Net 3260 s 'regardless of field size') survived for months while being wrong: the per-image one by two orders of magnitude, the nnU-Net one in both value and invariance.",
+ "_conditions": "GPU1 (RTX A5000) with BOTH cards idle: nvidia-smi read 0 MiB / 0% on GPU0 and GPU1 immediately before the run and again after it (logs/timing_idle_proof.txt), so unlike the 2026-07-31 measurement no campaign cell was sharing the machine. Method head_fusion_best_nobank_noloss_nocolor_flat_es_ep500_wd4_do5_mix_noaux -- the REPORTED lean configuration -- K=8, res 672, 3 repeats per dataset each drawing a DIFFERENT support subset, so the spread is over draws. `bank_only_ms` is carried over from 2026-07-31: the frozen bank is unchanged and that field feeds only \\bankShareOfMask, which the paper does not cite.",
+ "_source": "scripts/timing_bench.py via timing_now.sh (fit/encode/predict, re-measured 2026-09-02); nnU-Net rows unchanged from scripts/nnunet_bench.py, registry C66.",
+ "date": "2026-09-02",
+ "device": "RTX A5000",
+ "ours": [
+  {
+   "dataset": "dsb2018",
+   "side_px": 256,
+   "fit_s": {
+    "median": 29.2,
+    "min": 21.6,
+    "max": 38.2
+   },
+   "encode_ms": 136,
+   "image_to_mask_ms": 164.8,
+   "bank_only_ms": 13
+  },
+  {
+   "dataset": "drive",
+   "side_px": 584,
+   "fit_s": {
+    "median": 134.2,
+    "min": 90.6,
+    "max": 139.0
+   },
+   "encode_ms": 144,
+   "image_to_mask_ms": 203.2,
+   "bank_only_ms": 36
+  },
+  {
+   "dataset": "monuseg",
+   "side_px": 1000,
+   "fit_s": {
+    "median": 354.9,
+    "min": 354.4,
+    "max": 420.2
+   },
+   "encode_ms": 150,
+   "image_to_mask_ms": 700.5,
+   "bank_only_ms": 88
+  },
+  {
+   "dataset": "hrf",
+   "side_px": 3504,
+   "fit_s": {
+    "median": 549.7,
+    "min": 458.0,
+    "max": 656.7
+   },
+   "encode_ms": 209,
+   "image_to_mask_ms": 5417.2,
+   "bank_only_ms": 671
+  }
+ ],
+ "nnunet": [
+  {
+   "dataset": "dsb2018",
+   "side_px": 256,
+   "fit_s": 2256.88,
+   "bound": "exact",
+   "check": "iou 0.8543 against the campaign's 0.851, so the run is valid and not merely slow"
+  },
+  {
+   "dataset": "hrf",
+   "side_px": 3504,
+   "fit_s": 9000.0,
+   "bound": "lower",
+   "check": "did not finish inside a 9000 s cap; the true cost is larger, so every ratio derived from it is conservative in nnU-Net's favour"
+  }
+ ]
+}

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "active-segmenter"
+version = "0.1.0"
+description = "In-context active-learning polygon segmenter (frozen DINOv3-L propose -> cluster -> SAM refine)"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.5",
+    "transformers>=4.57",
+    "numpy",
+    "scipy",
+    "scikit-image",
+    "scikit-learn",
+    "tifffile",
+    "matplotlib",
+    "requests",
+    "Pillow",
+    "PyYAML",
+]
+
+[tool.setuptools.packages.find]
+include = ["active_segmenter*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+markers = [
+    "gpu: test needs a GPU and downloaded models (run on tulen, not in local CPU suite)",
+]
+addopts = "-m 'not gpu'"

@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.egg-info/
+.pytest_cache/
+# feature caches and downloaded benchmark data are large and reproducible
+cache/
+data/
+*.zip
