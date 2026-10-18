@@ -1,0 +1,113 @@
+{
+ "method": "SegGPT",
+ "dataset": "dsb2018",
+ "k": 8,
+ "seed": 0,
+ "support_idx": [
+  11,
+  1,
+  19,
+  7,
+  5,
+  4,
+  0,
+  8
+ ],
+ "pool": 20,
+ "n_test": 50,
+ "side_px": 256,
+ "device": "NVIDIA RTX A5000",
+ "argv": [
+  "scripts/c119/time_forward.py",
+  "--method",
+  "SegGPT",
+  "--datasets",
+  "dsb2018",
+  "--out",
+  "<path>/out"
+ ],
+ "date_start": "2026-10-17 07:31:50",
+ "loadavg_start": [
+  "29.46",
+  "31.51",
+  "32.67"
+ ],
+ "versions": {
+  "torch": "2.5.1+cu121",
+  "torch_cuda": "12.1",
+  "numpy": "2.2.6",
+  "skimage": "0.25.2",
+  "transformers": {
+   "version": "4.57.0",
+   "file": "<path>/__init__.py"
+  },
+  "huggingface_hub": {
+   "version": "0.36.2",
+   "file": "<path>/__init__.py"
+  }
+ },
+ "protocol": "(scripts/c119/timing_common.py)",
+ "torch_device": "NVIDIA RTX A5000",
+ "column": {
+  "score_arm": "results/final10/seggpt_k8",
+  "harness": "scripts/sota_final.py run --method seggpt --support 8 --pool 20 --test 10000 --seeds 10 --res 672 --metric_override fg_iou|cldice (scripts/run_campaign.py cmd_for)",
+  "backend": "active_segmenter/segment/seggpt_backend.py SegGptBackend(device='cuda', max_support=8)",
+  "input": "SegGptImageProcessor 448x448 canvas; 8 prompt pairs with feature_ensemble=True",
+  "readout": "mean of the 8 post-processed label maps (native size) > 0.5"
+ },
+ "clock": "SegGptBackend.foreground(test image): uint8 RGB min-max; processor on 8 query copies + the 8 support prompt pairs (re-processed and re-encoded on every query); forward with feature_ensemble=True; post_process_semantic_segmentation to native size; mean of the 8 label maps > 0.5; bool on the host",
+ "build": {
+  "checkpoint": "BAAI/seggpt-vit-large",
+  "name_or_path": "BAAI/seggpt-vit-large",
+  "config_file": "<path>/config.json",
+  "feature_ensemble": true,
+  "max_support": 8,
+  "num_labels": 1,
+  "embedding_type": null
+ },
+ "metric": "instance_ap",
+ "smoke": false,
+ "fit_s": null,
+ "fit_kind": "none (forward pass)",
+ "fit_detail": "nothing is fitted: the 8 support pairs enter every forward pass",
+ "infer_idx": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "infer_s": [
+  1.7701,
+  1.8469,
+  1.8236,
+  1.7695,
+  1.7694
+ ],
+ "infer_mean_s": 1.7959,
+ "infer_fg_fraction": [
+  0.065,
+  0.2168,
+  0.0892,
+  0.0378,
+  0.0256
+ ],
+ "warmup": {
+  "image": "support",
+  "pool_idx": 11,
+  "seconds": 2.1305,
+  "fg_fraction": 0.2523
+ },
+ "date_end": "2026-10-17 07:32:01",
+ "loadavg_end": [
+  "29.89",
+  "31.54",
+  "32.67"
+ ],
+ "support_encode_s": null,
+ "support_encode_detail": "none: no support features are cached; the network reads the support inside every inference clock",
+ "support_prep_s": 0.0119,
+ "support_prep_detail": "fit(): the 8 support images to uint8 RGB (min-max) and masks to {0,1}, empty-mask shots dropped; CPU numpy only, no network",
+ "k_used": 8,
+ "infer_peak_gpu_mib": 9770
+}

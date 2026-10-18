@@ -1,0 +1,45 @@
+[new]   [drive] seed 1 (fine view 4x): plain_mse=0.7226 bal_mse=0.8156 blend_ex=0.8183 blend1_ex=0.8183
+[new]   [drive] test pass 27 s for 2 seeds, 1 magnification(s)
+[new] [drive] 0.8182 over 2 seeds (13.3 s/fit) -> <work>/out/new/records/ridge__drive.json
+[new] exit 0 after 163 s (log <work>/out/new/log.txt)
+
+== environment
+  CUBLAS_WORKSPACE_CONFIG      None                             None
+  CUDA_VISIBLE_DEVICES         0                                0
+  cuda                         12.1                             12.1
+  cudnn                        92000                            92000
+  cudnn_benchmark              False                            False
+  cudnn_deterministic          False                            False
+  cudnn_tf32                   True                             True
+  float32_matmul_precision     highest                          highest
+  gpu                          NVIDIA A100 80GB PCIe            NVIDIA A100 80GB PCIe
+  matmul_tf32                  False                            False
+  numpy                        2.4.6                            2.4.6
+  python                       3.12.14                          3.12.14
+  scipy                        1.18.0                           1.18.0
+  skimage                      0.26.0                           0.26.0
+  torch                        2.5.1+cu121                      2.5.1+cu121
+  transformers                 5.13.0                           5.13.0
+
+== dsb2018
+  per_image: 100 scores, max |diff| 0; mean 0.861064 (orig) 0.861064 (new)
+
+== isbi2012em
+  per_image: 28 scores, max |diff| 0; mean 0.934266 (orig) 0.934266 (new)
+
+== drive
+  per_image: 40 scores, max |diff| 0; mean 0.818162 (orig) 0.818162 (new)
+
+== inputs: 192 of 192 images (at their magnifications) bit-identical (0 read by only one implementation)
+
+== per seed (orig/new)
+           tag | zoom | inputs |      sums |                 lam |             lam_bal |         a | w_rel
+     dsb2018/0 |  3/3 |    8/8 | identical |   0.672746/0.672746 |     0.75209/0.75209 |       1/1 |     0
+     dsb2018/1 |  2/2 |    8/8 | identical |   0.825443/0.825443 |   0.657102/0.657102 |       1/1 |     0
+  isbi2012em/0 |  3/3 |    8/8 | identical |   0.240195/0.240195 |   0.278116/0.278116 |   0.7/0.7 |     0
+  isbi2012em/1 |  4/4 |    8/8 | identical |   0.219292/0.219292 |   0.269813/0.269813 | 0.65/0.65 |     0
+       drive/0 |  4/4 |    8/8 | identical | 0.0254084/0.0254084 | 0.0484781/0.0484781 | 0.35/0.35 |     0
+       drive/1 |  4/4 |    8/8 | identical | 0.0197055/0.0197055 |   0.064921/0.064921 |   0.4/0.4 |     0
+
+PASS: 0 failure(s), 0 warning(s); tolerances: identical choices (support, z, lambda, lambda_bal, a, variant, cut), per-image scores |diff| <= 1e-06, weights max|dw|/max|w| <= 1e-06. Report: <work>/out/report.json
+GOLDEN EXIT 0

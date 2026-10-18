@@ -1,0 +1,76 @@
+{
+ "method": "Exemplar",
+ "dataset": "isbi2012em",
+ "k": 8,
+ "seed": 0,
+ "device": "NVIDIA RTX A5000",
+ "fit_s": 5.672,
+ "fit_kind": "measured (cold fit) + 8 coarse views",
+ "fit_detail": {
+  "definition": "cold fit from the 8 masks (magnification rule, fine view, priors, Gram matrices, lambda by Newton, held-out maps, blend choice), whose clock starts after the support's coarse views, PLUS 8 x the median coarse-view time measured on the timed test images",
+  "cold_s": 5.32,
+  "coarse_view_median_s": 0.044,
+  "coarse_views_added_s": 0.352,
+  "refit_s": 1.67,
+  "refit_with_coarse_s": 1.714,
+  "zoom_changed": false,
+  "cold_parts": {
+   "pass": 3.76,
+   "skel": 0.17,
+   "gate": 0.0,
+   "features": 2.69,
+   "gram": 0.79,
+   "feat_coarse": 0.06,
+   "feat_priors": 0.31,
+   "feat_fine": 2.32,
+   "plain_newton_s": 0.3,
+   "plain_nlam": 3,
+   "plain": 0.32,
+   "plain_ex": 0.01,
+   "bal_newton_s": 0.31,
+   "bal_nlam": 3,
+   "bal": 0.33,
+   "bal_ex": 0.01,
+   "blend_ex": 0.2527,
+   "reused": 0
+  },
+  "zoom": 3
+ },
+ "infer_idx": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "infer_s": [
+  0.3697,
+  0.3661,
+  0.3771,
+  0.3779,
+  0.3737
+ ],
+ "infer_mean_s": 0.3729,
+ "infer_detail": {
+  "features_s": [
+   0.3686,
+   0.3647,
+   0.3756,
+   0.3763,
+   0.3724
+  ],
+  "readout_s": [
+   0.0012,
+   0.0014,
+   0.0015,
+   0.0015,
+   0.0013
+  ],
+  "warmup": "support image pool[7], untimed"
+ },
+ "source": [
+  "refit__isbi2012em.json",
+  "predict__isbi2012em.json"
+ ],
+ "protocol": ""
+}

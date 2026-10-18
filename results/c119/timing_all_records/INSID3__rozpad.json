@@ -1,0 +1,125 @@
+{
+ "method": "INSID3",
+ "dataset": "rozpad",
+ "k": 8,
+ "seed": 0,
+ "support_idx": [
+  11,
+  1,
+  19,
+  7,
+  5,
+  4,
+  0,
+  8
+ ],
+ "pool": 20,
+ "n_test": 24,
+ "side_px": 2048,
+ "device": "NVIDIA RTX A5000",
+ "argv": [
+  "scripts/c119/time_insid3.py",
+  "--datasets",
+  "rozpad",
+  "--out",
+  "<path>/out"
+ ],
+ "date_start": "2026-10-17 07:39:39",
+ "loadavg_start": [
+  "35.92",
+  "35.75",
+  "34.31"
+ ],
+ "versions": {
+  "torch": "2.14.0+cu126",
+  "torch_cuda": "12.6",
+  "numpy": "2.4.6",
+  "pillow": "12.3.0",
+  "insid3_git": "not a git checkout",
+  "scipy": {
+   "version": "1.17.1",
+   "file": "<path>/__init__.py"
+  }
+ },
+ "protocol": "(scripts/c119/timing_common.py)",
+ "torch_device": "NVIDIA RTX A5000",
+ "column": {
+  "score_arm": "results/final10/insid3_k8",
+  "harness": "ASG_DATA_ROOT=<path> PANEL_DL_ROOT=<path>/panel_datasets <path>/python scripts/insid3_bench.py --support 8 --seeds 10 --pool 20 --test 10000/",
+  "backend": "<path>/INSID3 models.build_insid3(image_size=1024, mask_refiner='crf')",
+  "input": "the whole image to their loader at image_size 1024; 8 references, CRF refinement",
+  "readout": "segment() boolean mask at the original size (resize_to_orig_size default True)"
+ },
+ "clock": "_pil(test image); 8 x set_reference(ref_pil, Image.fromarray(mask*255)) (their segment() resets the references, so the support is set and re-encoded by DINOv3 for every query); set_target; segment() [DINOv3-L @1024 on 8 refs + target, matching, clustering, CRF, upsampling to original size]; .detach().cpu() -> bool; NEAREST resize to native size only if the shape differs (counted)",
+ "build": {
+  "insid3_dir": "<path>/INSID3",
+  "insid3_git": "not a git checkout",
+  "models_file": "<path>/__init__.py",
+  "build_kwargs": {
+   "image_size": 1024,
+   "mask_refiner": "crf"
+  },
+  "model_attrs": {
+   "image_size": "1024",
+   "mask_refiner": "'crf'",
+   "crf_size": "640",
+   "merge_threshold": "0.2",
+   "tau": "0.6",
+   "svd_components": "500",
+   "resize_to_orig_size": "True",
+   "device": "'cuda'"
+  },
+  "hub_dir": "<path>/hub",
+  "hub_checkpoint": "<path>/dinov3_vitl16_pretrain_lvd1689m-8aa4cbdd.pth",
+  "hub_checkpoint_present_before_build": true,
+  "hub_checkpoint_bytes": 1213034261,
+  "pretrain_file": "<path>/dinov3_vitl16_pretrain_lvd1689m-8aa4cbdd.pth",
+  "pretrain_bytes": 1213034261
+ },
+ "metric": "iou",
+ "smoke": false,
+ "fit_s": null,
+ "fit_kind": "none (forward pass)",
+ "fit_detail": "nothing is fitted: the 8 references are set and encoded inside every query",
+ "infer_idx": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "infer_s": [
+  1.857,
+  1.969,
+  2.2217,
+  2.5927,
+  2.2658
+ ],
+ "infer_mean_s": 2.1812,
+ "infer_fg_fraction": [
+  0.14,
+  0.099,
+  0.0614,
+  0.1289,
+  0.1139
+ ],
+ "warmup": {
+  "image": "support",
+  "pool_idx": 11,
+  "seconds": 2.7488,
+  "fg_fraction": 0.1057
+ },
+ "date_end": "2026-10-17 07:39:53",
+ "loadavg_end": [
+  "35.37",
+  "35.63",
+  "34.28"
+ ],
+ "support_encode_s": null,
+ "support_encode_detail": "none: segment() calls reset_state(), so set_reference runs for every query and DINOv3 re-encodes the 8 references inside every inference clock",
+ "support_prep_s": 0.1458,
+ "support_prep_detail": "the 8 support pairs to PIL RGB (_pil) and uint8 x255 masks, once per draw as in insid3_bench.py; CPU only, no network",
+ "k_used": 8,
+ "resize_fallback_fired": 0,
+ "infer_peak_gpu_mib": 2763
+}

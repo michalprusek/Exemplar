@@ -1,0 +1,78 @@
+{
+ "verdict": "PASS",
+ "tolerances": {
+  "score_tol": 1e-06,
+  "w_tol": 1e-06
+ },
+ "fails": [],
+ "warns": [],
+ "rows": [
+  {
+   "tag": "dsb2018/0",
+   "zoom": "3/3",
+   "inputs": "8/8",
+   "sums": "identical",
+   "lam": "0.672746/0.672746",
+   "lam_bal": "0.75209/0.75209",
+   "a": "1/1",
+   "w_rel": "0"
+  },
+  {
+   "tag": "dsb2018/1",
+   "zoom": "2/2",
+   "inputs": "8/8",
+   "sums": "identical",
+   "lam": "0.825443/0.825443",
+   "lam_bal": "0.657102/0.657102",
+   "a": "1/1",
+   "w_rel": "0"
+  },
+  {
+   "tag": "isbi2012em/0",
+   "zoom": "3/3",
+   "inputs": "8/8",
+   "sums": "identical",
+   "lam": "0.240195/0.240195",
+   "lam_bal": "0.278116/0.278116",
+   "a": "0.7/0.7",
+   "w_rel": "0"
+  },
+  {
+   "tag": "isbi2012em/1",
+   "zoom": "4/4",
+   "inputs": "8/8",
+   "sums": "identical",
+   "lam": "0.219292/0.219292",
+   "lam_bal": "0.269813/0.269813",
+   "a": "0.65/0.65",
+   "w_rel": "0"
+  },
+  {
+   "tag": "drive/0",
+   "zoom": "4/4",
+   "inputs": "8/8",
+   "sums": "identical",
+   "lam": "0.0254084/0.0254084",
+   "lam_bal": "0.0484781/0.0484781",
+   "a": "0.35/0.35",
+   "w_rel": "0"
+  },
+  {
+   "tag": "drive/1",
+   "zoom": "4/4",
+   "inputs": "8/8",
+   "sums": "identical",
+   "lam": "0.0197055/0.0197055",
+   "lam_bal": "0.064921/0.064921",
+   "a": "0.4/0.4",
+   "w_rel": "0"
+  }
+ ],
+ "datasets": [
+  "dsb2018",
+  "isbi2012em",
+  "drive"
+ ],
+ "seeds": 2,
+ "k": 8
+}

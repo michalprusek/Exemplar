@@ -1,0 +1,135 @@
+{
+ "method": "micro-SAM",
+ "dataset": "drive",
+ "k": 8,
+ "seed": 0,
+ "support_idx": [
+  11,
+  1,
+  19,
+  7,
+  5,
+  4,
+  0,
+  8
+ ],
+ "pool": 20,
+ "n_test": 20,
+ "side_px": 584,
+ "device": "NVIDIA RTX A5000",
+ "argv": [
+  "scripts/c119/time_specialists.py",
+  "--backend",
+  "microsam_ft",
+  "--datasets",
+  "drive",
+  "--out",
+  "<path>/out",
+  "--work_dir",
+  "<path>/work_microsam",
+  "--discard_checkpoints"
+ ],
+ "date_start": "2026-10-17 12:14:31",
+ "loadavg_start": [
+  "48.63",
+  "43.20",
+  "41.66"
+ ],
+ "versions": {
+  "python": "3.11.15",
+  "micro_sam": "1.8.5",
+  "torch_em": "0.10.0",
+  "torch": "2.12.1",
+  "segment_anything": "unknown",
+  "numpy": "1.26.4"
+ },
+ "protocol": "(scripts/c119/timing_common.py)",
+ "smoke": false,
+ "backend": "microsam_ft",
+ "table1_arm": "final10/microsam_ft11sem_k8",
+ "epochs": 50,
+ "epochs_table1": 50,
+ "epochs_overridden": false,
+ "lr": 1e-05,
+ "library_budget": {
+  "n_iterations": 400
+ },
+ "pretrained": "vit_b_lm",
+ "readout": "semantic: raw decoder foreground > 0.5 (micro-SAM's default foreground_threshold, without the Gaussian smoothing its instance reconstruction applies first)",
+ "framework_device": "NVIDIA RTX A5000",
+ "infer_sync": "torch.cuda.synchronize before and after (timing_common.make_sync)",
+ "infer_inside": "prep_image, SAM image embedding, the AIS decoder's foreground map (initialize), > 0.5 without smoothing",
+ "work_dir": "<path>/drive_k8_s0",
+ "code_md5": {
+  "scripts/c119/time_specialists.py": "2d4758d70dc13e5546b7f436a031bd83",
+  "scripts/c119/timing_common.py": "63483eca42b53615990964971d5c63ad",
+  "scripts/specialist_finetune_bench.py": "30e28bd906187c69e4ca7b13cf56ed4f",
+  "scripts/cellpose_stardist_bench.py": "ef510be6136fc866e75b3c69af737662",
+  "scripts/microsam_bench.py": "bd394da6ae91ec294acae727e90ad5a3"
+ },
+ "fit_s": 387.251,
+ "fit_kind": "measured",
+ "fit_detail": {
+  "train_call": "micro_sam.training.train_sam, torch.cuda.synchronize() before and after",
+  "inside": [
+   "building the SAM model and its UNETR segmentation decoder and loading the pretrained weights (train_sam takes the model_type, checkpoint_path=None): unlike the other two specialists, model construction is INSIDE this clock",
+   "the optimizer and scheduler, the torch_em trainer's 400 iterations (50 epochs x 8 images, batch 1, n_objects_per_batch 8, n_sub_iteration 4, lr 1e-05), a validation pass over the support loader after each epoch",
+   "the trainer's checkpoint writes (latest.pt, best.pt) into the per-dataset work directory"
+  ],
+  "outside": [
+   "prep_image() and the instancing of the support masks",
+   "the two default_sam_loader() calls (evaluated as arguments before train_sam is entered)",
+   "get_predictor_and_segmenter() on the fine-tuned best.pt after training"
+  ],
+  "attempts": [
+   {
+    "seconds": 387.251,
+    "completed": true
+   }
+  ],
+  "note": "'inside' lists what the library's call does internally, as understood from the libraries when the bench was written; this script instruments only the call itself",
+  "postfit_s": 2.97,
+  "restarts": 0,
+  "fit_s_all_attempts": 387.251,
+  "fit_s_is": "the completed train_sam call only",
+  "checkpoint": "<path>/best.pt"
+ },
+ "infer_idx": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "infer_s": [
+  0.2717,
+  0.2425,
+  0.2412,
+  0.2184,
+  0.2426
+ ],
+ "infer_mean_s": 0.2433,
+ "infer_fg_fraction": [
+  0.087,
+  0.0887,
+  0.0785,
+  0.0768,
+  0.0793
+ ],
+ "warmup": {
+  "image": "support",
+  "support_pos": 0,
+  "pool_idx": 11,
+  "seconds": 0.4251,
+  "fg_fraction": 0.0704,
+  "zero_arrays_per_test_shape": []
+ },
+ "date_end": "2026-10-17 12:21:03",
+ "loadavg_end": [
+  "35.28",
+  "40.85",
+  "41.41"
+ ],
+ "readout_info": {},
+ "restarts": 0
+}

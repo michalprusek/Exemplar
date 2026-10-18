@@ -1,0 +1,42 @@
+{
+ "_what": "Fit and prediction time of Cellpose-SAM fine-tuned on K=8 support masks, semantic read-out, 800 epochs, measured with the protocol of timing_bench.py.",
+ "device": "NVIDIA RTX A5000",
+ "gpu_before": "0, NVIDIA A100 80GB PCIe, 68729 MiB, 100 %\n1, NVIDIA RTX A5000, 213 MiB, 0 %",
+ "gpu_after": "0, NVIDIA A100 80GB PCIe, 63395 MiB, 99 %\n1, NVIDIA RTX A5000, 571 MiB, 100 %",
+ "date": "2026-10-11 14:52",
+ "epochs": 800,
+ "support": 8,
+ "repeats": 3,
+ "rows": [
+  {
+   "dataset": "dsb2018",
+   "side_px": 256,
+   "fit_s": {
+    "median": 1297.4,
+    "min": 1278.7,
+    "max": 1311.6
+   },
+   "image_to_mask_ms": 116.4
+  },
+  {
+   "dataset": "drive",
+   "side_px": 584,
+   "fit_s": {
+    "median": 1294.1,
+    "min": 1274.5,
+    "max": 1303.6
+   },
+   "image_to_mask_ms": 272.0
+  },
+  {
+   "dataset": "hrf",
+   "side_px": 3504,
+   "fit_s": {
+    "median": 1910.9,
+    "min": 1904.6,
+    "max": 1959.3
+   },
+   "image_to_mask_ms": 6189.3
+  }
+ ]
+}

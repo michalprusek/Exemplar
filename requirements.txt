@@ -1,0 +1,14 @@
+# DINOv3 ViT-L/16 is a gated Hugging Face checkpoint and needs transformers >= 4.57.
+# Equality checks against the paper's records (tools/golden_compare.py) need the same versions of torch, transformers,
+# numpy, scipy and scikit-image as the reference run (docs/REPRODUCE.md, section 4).
+torch>=2.5
+transformers>=4.57
+numpy
+scipy
+scikit-image
+tifffile
+Pillow
+requests   # benchmark only: DSB2018 / HRF download on a miss
+pyarrow    # benchmark only: MoNuSeg is distributed as parquet files
+matplotlib # paper/make_paper.sh and tests/test_paper.py
+pytest     # tests

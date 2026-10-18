@@ -1,0 +1,129 @@
+{
+ "method": "ilastik",
+ "dataset": "spheroidj",
+ "k": 8,
+ "seed": 0,
+ "support_idx": [
+  11,
+  1,
+  19,
+  7,
+  5,
+  4,
+  0,
+  8
+ ],
+ "pool": 20,
+ "n_test": 24,
+ "side_px": 1296,
+ "device": "CPU of the host of the NVIDIA RTX A5000 (ilastik is CPU-only; the card idle under the campaign holder)",
+ "argv": [
+  "scripts/c119/time_ilastik.py",
+  "--datasets",
+  "spheroidj",
+  "--out",
+  "<path>/out",
+  "--work",
+  "<path>/work_ilastik"
+ ],
+ "date_start": "2026-10-18 07:39:07",
+ "loadavg_start": [
+  "4.32",
+  "4.04",
+  "3.03"
+ ],
+ "versions": {
+  "ilastik": "ilastik 1.4.2 (official Linux release, files.ilastik.org)"
+ },
+ "protocol": "(scripts/c119/timing_common.py)",
+ "smoke": false,
+ "compute": "cpu",
+ "host_card": "NVIDIA RTX A5000",
+ "colour": true,
+ "colour_support": 7,
+ "px_per_image": 20000,
+ "sources_md5": {
+  "time_ilastik.py": "db1e7910ad2b151debef4cfea60796d8",
+  "timing_common.py": "63483eca42b53615990964971d5c63ad",
+  "ilastik_panel.py": "61ee5082fa08059f1fa05394c4fbbcfd",
+  "ilastik_driver.py": "fa820a31b656667363aab10ebb809fc8",
+  "env.sh": "0f193aa58430efbc58b0b108a1b90202",
+  "ilastik_python": "2f6006e66ce11d2af7938fc15f9ae040"
+ },
+ "c120": "<path>/c120_ilastik",
+ "cmd": [
+  "<path>/ilastik_python",
+  "-I",
+  "<path>/ilastik_driver.py",
+  "--support",
+  "<path>/s0.npy,<path>/s1.npy,<path>/s2.npy,<path>/s3.npy,<path>/s4.npy,<path>/s5.npy,<path>/s6.npy,<path>/s7.npy",
+  "--labels",
+  "<path>/l0.npy,<path>/l1.npy,<path>/l2.npy,<path>/l3.npy,<path>/l4.npy,<path>/l5.npy,<path>/l6.npy,<path>/l7.npy",
+  "--test",
+  "<path>/w_support0.npy,<path>/t0000.npy,<path>/t0001.npy,<path>/t0002.npy,<path>/t0003.npy,<path>/t0004.npy",
+  "--project",
+  "<path>/project.ilp",
+  "--out_dir",
+  "<path>/probs",
+  "--mixed_channels",
+  "error"
+ ],
+ "infer_kind": "ilastik Batch Processing run_export (export source Probabilities) from the .npy file to the probability array in memory: features + forest prediction; then p > 0.5 after the clock",
+ "fit_s": 50.0,
+ "fit_kind": "measured",
+ "fit_detail": {
+  "clock": "ilastik_driver.py `train`: opPC.FreezePredictions False + opPC.Classifier.value (features on the labelled support images + ParallelVigraRfLazyflowClassifier fit, 100 trees in 8 sub-forests)",
+  "outside": "ilastik start and new project (startup), adding the 8 support images to the project, setting the feature matrix and the labels, saving the project",
+  "startup_s": 3.223,
+  "save_s": 0.276,
+  "driver_total_s": 69.27,
+  "wall_s": 71.1,
+  "n_feature_channels": 147,
+  "classifier_factory": {
+   "class": "ParallelVigraRfLazyflowClassifierFactory",
+   "num_trees_total": 100,
+   "num_forests": 8,
+   "vigra_kwargs": {},
+   "lazyflow_workers": 8
+  },
+  "labels_bg": 80000,
+  "labels_fg": 74348,
+  "training_log": [
+   "Training complete. Label counts: (80000, 74348). Average OOB: 0.025"
+  ]
+ },
+ "infer_idx": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "infer_s": [
+  2.4644,
+  2.3295,
+  2.6847,
+  2.2041,
+  2.0674
+ ],
+ "infer_mean_s": 2.35,
+ "infer_fg_fraction": [
+  0.2105,
+  0.1428,
+  0.1596,
+  0.1099,
+  0.0007
+ ],
+ "warmup": {
+  "image": "support",
+  "pool_idx": 11,
+  "s": 2.0441,
+  "fg_fraction": 0.012
+ },
+ "date_end": "2026-10-18 07:40:18",
+ "loadavg_end": [
+  "6.73",
+  "4.76",
+  "3.35"
+ ]
+}

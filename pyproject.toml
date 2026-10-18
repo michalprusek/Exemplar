@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=77"]   # 77: license as an SPDX expression and license-files (PEP 639)
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "exemplar"
+version = "1.0.0"
+description = "In-context biomedical segmentation by a closed-form readout of a frozen DINOv3 backbone and classical priors (ISBI 2027)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Michal Průšek", email = "prusemic@fjfi.cvut.cz" },
+    { name = "Adam Novozámský" },
+    { name = "Filip Šroubek" },
+]
+dependencies = [
+    "torch>=2.5",
+    "transformers>=4.57",
+    "numpy",
+    "scipy",
+    "scikit-image",
+    "tifffile",
+    "Pillow",
+]
+
+[project.optional-dependencies]
+benchmark = ["requests", "pyarrow"]   # pyarrow: MoNuSeg is distributed as parquet files
+paper = ["matplotlib"]           # paper/make_paper.sh (Fig. 2); scipy and Pillow are core dependencies
+test = ["pytest", "matplotlib"]  # matplotlib: tests/test_paper.py runs paper/make_paper.sh (skipped without it)
+
+[project.urls]
+Repository = "https://github.com/michalprusek/Exemplar"
+
+[tool.setuptools.packages.find]
+include = ["exemplar*", "benchmark*"]
+
+[tool.pytest.ini_options]
+pythonpath = [".", "tests"]
+testpaths = ["tests"]

@@ -1,0 +1,127 @@
+{
+ "method": "Cellpose-SAM",
+ "dataset": "dsb2018",
+ "k": 8,
+ "seed": 0,
+ "support_idx": [
+  11,
+  1,
+  19,
+  7,
+  5,
+  4,
+  0,
+  8
+ ],
+ "pool": 20,
+ "n_test": 50,
+ "side_px": 256,
+ "device": "NVIDIA RTX A5000",
+ "argv": [
+  "scripts/c119/time_specialists.py",
+  "--backend",
+  "cellpose_ft",
+  "--datasets",
+  "dsb2018",
+  "--out",
+  "<path>/out"
+ ],
+ "date_start": "2026-10-17 13:39:09",
+ "loadavg_start": [
+  "40.55",
+  "41.43",
+  "41.48"
+ ],
+ "versions": {
+  "python": "3.12.14",
+  "cellpose": "4.0.9",
+  "torch": "2.14.1",
+  "torchvision": "0.29.1",
+  "numpy": "2.5.3"
+ },
+ "protocol": "(scripts/c119/timing_common.py)",
+ "smoke": false,
+ "backend": "cellpose_ft",
+ "table1_arm": "final10/cellpose_ft11sem_k8",
+ "epochs": 800,
+ "epochs_table1": 800,
+ "epochs_overridden": false,
+ "lr": 1e-05,
+ "library_budget": {
+  "n_epochs": 800
+ },
+ "pretrained": "cpsam (the built-in default of cellpose 4.0.9, CellposeModel(gpu=True))",
+ "readout": "semantic: cellprob > 0, Cellpose's default cellprob_threshold",
+ "framework_device": "NVIDIA RTX A5000",
+ "infer_sync": "torch.cuda.synchronize before and after (timing_common.make_sync)",
+ "infer_inside": "cpsam_input, model.eval(diameter=None, compute_masks=False) on Cellpose's 256-px tiles, cellprob > 0 at native resolution",
+ "work_dir": null,
+ "code_md5": {
+  "scripts/c119/time_specialists.py": "2d4758d70dc13e5546b7f436a031bd83",
+  "scripts/c119/timing_common.py": "63483eca42b53615990964971d5c63ad",
+  "scripts/specialist_finetune_bench.py": "30e28bd906187c69e4ca7b13cf56ed4f",
+  "scripts/cellpose_stardist_bench.py": "ef510be6136fc866e75b3c69af737662",
+  "scripts/microsam_bench.py": "bd394da6ae91ec294acae727e90ad5a3"
+ },
+ "fit_s": 1444.722,
+ "fit_kind": "measured",
+ "fit_detail": {
+  "train_call": "cellpose.train.train_seg, torch.cuda.synchronize() before and after",
+  "inside": [
+   "train_seg's own conversion of the 8 instance masks into flow targets",
+   "the training loop: 800 epochs over the 8 support images, batch 1, lr 1e-05, min_train_masks=0",
+   "the checkpoint files train_seg writes, into a temporary directory"
+  ],
+  "outside": [
+   "CellposeModel(gpu=True): construction and loading of the pretrained cpsam weights",
+   "cpsam_input() and the connected-component instancing of the support masks",
+   "the bench's weights-moved guard (a full copy of the weights before and after)"
+  ],
+  "attempts": [
+   {
+    "seconds": 1444.722,
+    "completed": true
+   }
+  ],
+  "note": "'inside' lists what the library's call does internally, as understood from the libraries when the bench was written; this script instruments only the call itself",
+  "postfit_s": 2.165,
+  "net_device": "cuda:0"
+ },
+ "infer_idx": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "infer_s": [
+  0.1253,
+  0.1558,
+  0.1591,
+  0.1726,
+  0.1859
+ ],
+ "infer_mean_s": 0.1597,
+ "infer_fg_fraction": [
+  0.0552,
+  0.2408,
+  0.0858,
+  0.0357,
+  0.0211
+ ],
+ "warmup": {
+  "image": "support",
+  "support_pos": 0,
+  "pool_idx": 11,
+  "seconds": 0.2349,
+  "fg_fraction": 0.2685,
+  "zero_arrays_per_test_shape": []
+ },
+ "date_end": "2026-10-17 14:03:22",
+ "loadavg_end": [
+  "44.27",
+  "43.55",
+  "42.19"
+ ],
+ "readout_info": {}
+}

@@ -1,0 +1,76 @@
+{
+ "method": "Exemplar",
+ "dataset": "bacteria",
+ "k": 8,
+ "seed": 0,
+ "device": "NVIDIA RTX A5000",
+ "fit_s": 4.64,
+ "fit_kind": "measured (cold fit) + 8 coarse views",
+ "fit_detail": {
+  "definition": "cold fit from the 8 masks (magnification rule, fine view, priors, Gram matrices, lambda by Newton, held-out maps, blend choice), whose clock starts after the support's coarse views, PLUS 8 x the median coarse-view time measured on the timed test images",
+  "cold_s": 4.29,
+  "coarse_view_median_s": 0.0438,
+  "coarse_views_added_s": 0.35,
+  "refit_s": 1.6,
+  "refit_with_coarse_s": 1.644,
+  "zoom_changed": false,
+  "cold_parts": {
+   "pass": 3.27,
+   "skel": 0.0,
+   "gate": 0.0,
+   "features": 2.24,
+   "gram": 0.86,
+   "feat_coarse": 0.06,
+   "feat_priors": 0.36,
+   "feat_fine": 1.82,
+   "plain_newton_s": 0.37,
+   "plain_nlam": 4,
+   "plain": 0.4,
+   "plain_ex": 0.01,
+   "bal_newton_s": 0.31,
+   "bal_nlam": 3,
+   "bal": 0.32,
+   "bal_ex": 0.01,
+   "blend_ex": 0.0066,
+   "reused": 0
+  },
+  "zoom": 2
+ },
+ "infer_idx": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "infer_s": [
+  0.3758,
+  0.3825,
+  0.3789,
+  0.4063,
+  0.1889
+ ],
+ "infer_mean_s": 0.3465,
+ "infer_detail": {
+  "features_s": [
+   0.3744,
+   0.3812,
+   0.3776,
+   0.4051,
+   0.1881
+  ],
+  "readout_s": [
+   0.0014,
+   0.0013,
+   0.0013,
+   0.0012,
+   0.0007
+  ],
+  "warmup": "support image pool[11], untimed"
+ },
+ "source": [
+  "refit__bacteria.json",
+  "predict__bacteria.json"
+ ],
+ "protocol": ""
+}

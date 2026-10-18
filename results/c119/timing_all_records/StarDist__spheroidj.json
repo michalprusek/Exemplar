@@ -1,0 +1,144 @@
+{
+ "method": "StarDist",
+ "dataset": "spheroidj",
+ "k": 8,
+ "seed": 0,
+ "support_idx": [
+  11,
+  1,
+  19,
+  7,
+  5,
+  4,
+  0,
+  8
+ ],
+ "pool": 20,
+ "n_test": 24,
+ "side_px": 1296,
+ "device": "NVIDIA RTX A5000",
+ "argv": [
+  "scripts/c119/time_specialists.py",
+  "--backend",
+  "stardist_ft",
+  "--datasets",
+  "spheroidj",
+  "--out",
+  "<path>/out"
+ ],
+ "date_start": "2026-10-17 09:33:18",
+ "loadavg_start": [
+  "43.74",
+  "42.16",
+  "40.15"
+ ],
+ "versions": {
+  "python": "3.11.14",
+  "stardist": "0.9.1",
+  "csbdeep": "0.8.2",
+  "tensorflow": "2.15.1",
+  "numpy": "1.26.4",
+  "scipy": "1.17.1"
+ },
+ "protocol": "(scripts/c119/timing_common.py)",
+ "smoke": false,
+ "backend": "stardist_ft",
+ "table1_arm": "final10/stardist_ft11sem_k8",
+ "epochs": 1600,
+ "epochs_table1": 1600,
+ "epochs_overridden": false,
+ "lr": 0.0003,
+ "library_budget": {
+  "epochs": 1600,
+  "steps_per_epoch": 8,
+  "batch_size": 1
+ },
+ "pretrained": "2D_versatile_fluo",
+ "readout": "semantic: object probability, interpolated on StarDist's grid, > a threshold chosen on the support images for foreground IoU",
+ "framework_device": "NVIDIA RTX A5000",
+ "infer_sync": "none: TensorFlow, no torch in this env; predict() returns a host numpy array, and fetching it waits for the device",
+ "infer_inside": "percentile normalisation, tiled model.predict, the grid probability interpolated to native resolution at StarDist's own coordinates, > the support-chosen threshold",
+ "work_dir": null,
+ "code_md5": {
+  "scripts/c119/time_specialists.py": "2d4758d70dc13e5546b7f436a031bd83",
+  "scripts/c119/timing_common.py": "63483eca42b53615990964971d5c63ad",
+  "scripts/specialist_finetune_bench.py": "30e28bd906187c69e4ca7b13cf56ed4f",
+  "scripts/cellpose_stardist_bench.py": "ef510be6136fc866e75b3c69af737662",
+  "scripts/microsam_bench.py": "bd394da6ae91ec294acae727e90ad5a3"
+ },
+ "fit_s": 603.413,
+ "fit_kind": "measured",
+ "fit_detail": {
+  "train_call": "stardist.models.StarDist2D.train (class attribute wrapped), no device sync: TensorFlow; Keras fit returns after its last epoch",
+  "inside": [
+   "StarDist2D.train's data generators, including the star-distance targets of the validation data (the support itself, as the bench passes it)",
+   "the Keras compile on first use",
+   "the Keras fit: 1600 epochs x 8 steps x batch 1 at lr 0.0003 with the bench's flip/rotation augmenter, and a validation pass over the support after every epoch"
+  ],
+  "outside": [
+   "StarDist2D.from_pretrained and the percentile normalisation of the support images",
+   "the semantic read-out's threshold choice: probability maps of the 8 support images and 15 thresholds scored with the dataset's metric (it also warms TensorFlow's predict up)",
+   "the bench's weights-moved guard"
+  ],
+  "attempts": [
+   {
+    "seconds": 603.413,
+    "completed": true
+   }
+  ],
+  "note": "'inside' lists what the library's call does internally, as understood from the libraries when the bench was written; this script instruments only the call itself",
+  "postfit_s": 20.704
+ },
+ "infer_idx": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "infer_s": [
+  0.3091,
+  0.6701,
+  0.3913,
+  0.7093,
+  0.3932
+ ],
+ "infer_mean_s": 0.4946,
+ "infer_fg_fraction": [
+  0.2289,
+  0.128,
+  0.1241,
+  0.1436,
+  0.0771
+ ],
+ "warmup": {
+  "image": "support",
+  "support_pos": 0,
+  "pool_idx": 11,
+  "seconds": 0.5532,
+  "fg_fraction": 0.065,
+  "zero_arrays_per_test_shape": [
+   {
+    "shape": [
+     966,
+     1296,
+     3
+    ],
+    "seconds": 0.3838
+   }
+  ]
+ },
+ "date_end": "2026-10-17 09:43:47",
+ "loadavg_end": [
+  "48.66",
+  "46.39",
+  "43.14"
+ ],
+ "readout_info": {
+  "threshold": 0.01,
+  "support_score": 0.395,
+  "support_score_at_half": 0.1357,
+  "support_images_without_foreground": 0,
+  "at_grid_end": false
+ }
+}

@@ -1,0 +1,117 @@
+{
+ "method": "Tyche",
+ "dataset": "spheroidj",
+ "k": 8,
+ "seed": 0,
+ "support_idx": [
+  11,
+  1,
+  19,
+  7,
+  5,
+  4,
+  0,
+  8
+ ],
+ "pool": 20,
+ "n_test": 24,
+ "side_px": 1296,
+ "device": "NVIDIA RTX A5000",
+ "argv": [
+  "scripts/c119/time_forward.py",
+  "--method",
+  "Tyche",
+  "--datasets",
+  "spheroidj",
+  "--out",
+  "<path>/out"
+ ],
+ "date_start": "2026-10-17 07:23:41",
+ "loadavg_start": [
+  "31.16",
+  "31.30",
+  "32.73"
+ ],
+ "versions": {
+  "torch": "2.5.1+cu121",
+  "torch_cuda": "12.1",
+  "numpy": "2.4.6",
+  "skimage": "0.26.0",
+  "einops": {
+   "version": "0.7.0",
+   "file": "<path>/__init__.py"
+  },
+  "pydantic": {
+   "version": "1.10.13",
+   "file": "<path>/__init__.py"
+  }
+ },
+ "protocol": "(scripts/c119/timing_common.py)",
+ "torch_device": "NVIDIA RTX A5000",
+ "column": {
+  "score_arm": "results/final10/tyche_bestof_k8",
+  "harness": "scripts/tyche_bench.py --support 8 --seeds 10 (best-of-16 candidates against the test mask,",
+  "backend": "active_segmenter/segment/tyche_backend.py TycheBackend(device='cuda') (res 128, max_support 32, n_pred 16)",
+  "input": "whole image, grey min-max, resized to 128x128",
+  "readout": "16 candidates resized to native size, each > 0.5 (the best one is picked against the test mask by the column's SCORING, outside the clock)"
+ },
+ "clock": "candidates(be, test image) > 0.5 (verbatim copy of scripts/tyche_bench.py:candidates): grey min-max, resize to 128 px, one pred_ged_stats call with target_size=16 (support read jointly with the query), sigmoid, to host, skimage resize of all 16 maps to native size, each > 0.5. The best-of-16 selection against the test mask is the column's scoring and is NOT timed",
+ "build": {
+  "checkpoint": "<path>/tyche_v1_model_weights_CVPR.pt",
+  "checkpoint_md5": "036242df8b6b24ef48332ae99c67138c",
+  "checkpoint_bytes": 21073533,
+  "res": 128,
+  "n_pred": 16,
+  "max_support": 32,
+  "tyche_src": "<path>/tyche_src",
+  "tyche_src_git": {
+   "rev": "e8031e18f15583c2de8077d37b6d0ac5132a3aba",
+   "dirty": false
+  }
+ },
+ "metric": "iou",
+ "smoke": false,
+ "fit_s": null,
+ "fit_kind": "none (forward pass)",
+ "fit_detail": "nothing is fitted: the 8 support pairs enter every forward pass",
+ "infer_idx": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "infer_s": [
+  0.9669,
+  0.4995,
+  1.039,
+  0.8473,
+  0.9784
+ ],
+ "infer_mean_s": 0.8662,
+ "infer_fg_fraction": [
+  0.0522,
+  0.0841,
+  0.1105,
+  0.0883,
+  0.0061
+ ],
+ "warmup": {
+  "image": "support",
+  "pool_idx": 11,
+  "seconds": 2.5548,
+  "fg_fraction": 0.0048
+ },
+ "date_end": "2026-10-17 07:23:49",
+ "loadavg_end": [
+  "29.44",
+  "30.91",
+  "32.58"
+ ],
+ "support_encode_s": null,
+ "support_encode_detail": "none: no support features are cached; the network reads the support inside every inference clock",
+ "support_prep_s": 1.0451,
+ "support_prep_detail": "fit(): the 8 support pairs resized to 128 px and copied to the GPU as [8,1,128,128] tensors, reused by every query; no network",
+ "k_used": 8,
+ "infer_peak_gpu_mib": 781
+}

@@ -1,0 +1,76 @@
+{
+ "method": "Exemplar",
+ "dataset": "spheroidj",
+ "k": 8,
+ "seed": 0,
+ "device": "NVIDIA RTX A5000",
+ "fit_s": 6.62,
+ "fit_kind": "measured (cold fit) + 8 coarse views",
+ "fit_detail": {
+  "definition": "cold fit from the 8 masks (magnification rule, fine view, priors, Gram matrices, lambda by Newton, held-out maps, blend choice), whose clock starts after the support's coarse views, PLUS 8 x the median coarse-view time measured on the timed test images",
+  "cold_s": 6.13,
+  "coarse_view_median_s": 0.0612,
+  "coarse_views_added_s": 0.49,
+  "refit_s": 2.54,
+  "refit_with_coarse_s": 2.601,
+  "zoom_changed": false,
+  "cold_parts": {
+   "pass": 4.1,
+   "skel": 0.0,
+   "gate": 0.0,
+   "features": 3.0,
+   "gram": 0.99,
+   "feat_coarse": 0.09,
+   "feat_priors": 1.41,
+   "feat_fine": 1.5,
+   "plain_newton_s": 0.53,
+   "plain_nlam": 6,
+   "plain": 0.55,
+   "plain_ex": 0.01,
+   "bal_newton_s": 0.46,
+   "bal_nlam": 5,
+   "bal": 0.48,
+   "bal_ex": 0.01,
+   "blend_ex": 0.0117,
+   "reused": 0
+  },
+  "zoom": 1
+ },
+ "infer_idx": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "infer_s": [
+  0.5352,
+  0.5567,
+  0.4038,
+  0.4407,
+  0.4476
+ ],
+ "infer_mean_s": 0.4768,
+ "infer_detail": {
+  "features_s": [
+   0.5324,
+   0.554,
+   0.4011,
+   0.4377,
+   0.4444
+  ],
+  "readout_s": [
+   0.0029,
+   0.0027,
+   0.0028,
+   0.0029,
+   0.0031
+  ],
+  "warmup": "support image pool[11], untimed"
+ },
+ "source": [
+  "refit__spheroidj.json",
+  "predict__spheroidj.json"
+ ],
+ "protocol": ""
+}

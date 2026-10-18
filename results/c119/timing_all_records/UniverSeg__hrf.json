@@ -1,0 +1,115 @@
+{
+ "method": "UniverSeg",
+ "dataset": "hrf",
+ "k": 8,
+ "seed": 0,
+ "support_idx": [
+  11,
+  1,
+  19,
+  7,
+  5,
+  4,
+  0,
+  8
+ ],
+ "pool": 20,
+ "n_test": 25,
+ "side_px": 3504,
+ "device": "NVIDIA RTX A5000",
+ "argv": [
+  "scripts/c119/time_forward.py",
+  "--method",
+  "UniverSeg",
+  "--datasets",
+  "hrf",
+  "--out",
+  "<path>/out"
+ ],
+ "date_start": "2026-10-17 07:22:02",
+ "loadavg_start": [
+  "30.23",
+  "31.05",
+  "32.81"
+ ],
+ "versions": {
+  "torch": "2.5.1+cu121",
+  "torch_cuda": "12.1",
+  "numpy": "2.2.6",
+  "skimage": "0.25.2",
+  "einops": {
+   "version": "0.7.0",
+   "file": "<path>/__init__.py"
+  },
+  "pydantic": {
+   "version": "1.10.13",
+   "file": "<path>/__init__.py"
+  },
+  "universeg": {
+   "version": "0.1.0",
+   "file": "<path>/__init__.py"
+  }
+ },
+ "protocol": "(scripts/c119/timing_common.py)",
+ "torch_device": "NVIDIA RTX A5000",
+ "column": {
+  "score_arm": "results/final10/universeg_k8",
+  "harness": "scripts/sota_final.py run --method universeg --support 8 --pool 20 --test 10000 --seeds 10 --res 672 --metric_override fg_iou|cldice (scripts/run_campaign.py cmd_for)",
+  "backend": "active_segmenter/segment/universeg_backend.py UniverSegBackend(device='cuda') (res 128, max_support 32)",
+  "input": "whole image, grey min-max, resized to 128x128",
+  "readout": "sigmoid probability resized to native size > 0.5"
+ },
+ "clock": "UniverSegBackend.foreground(test image): grey min-max, skimage resize to 128 px, forward against the 8 cached 128-px support tensors (support read jointly with the query by every forward), sigmoid, to host, skimage resize to native size, > 0.5",
+ "build": {
+  "checkpoint": "<path>/universeg_v1_nf64_ss64_STA.pt",
+  "checkpoint_md5": "fdae87ca5096cdddb4c19be532b3e866",
+  "checkpoint_bytes": 4748449,
+  "res": 128,
+  "max_support": 32
+ },
+ "metric": "cldice",
+ "smoke": false,
+ "fit_s": null,
+ "fit_kind": "none (forward pass)",
+ "fit_detail": "nothing is fitted: the 8 support pairs enter every forward pass",
+ "infer_idx": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "infer_s": [
+  1.3631,
+  1.2859,
+  1.3625,
+  1.1788,
+  1.3824
+ ],
+ "infer_mean_s": 1.3145,
+ "infer_fg_fraction": [
+  0.0314,
+  0.0323,
+  0.0239,
+  0.0336,
+  0.0207
+ ],
+ "warmup": {
+  "image": "support",
+  "pool_idx": 11,
+  "seconds": 2.8615,
+  "fg_fraction": 0.0483
+ },
+ "date_end": "2026-10-17 07:22:26",
+ "loadavg_end": [
+  "31.77",
+  "31.31",
+  "32.85"
+ ],
+ "support_encode_s": null,
+ "support_encode_detail": "none: no support features are cached; the network reads the support inside every inference clock",
+ "support_prep_s": 15.0263,
+ "support_prep_detail": "fit(): the 8 support pairs resized to 128 px and copied to the GPU as [1,8,1,128,128] tensors, reused by every query; no network",
+ "k_used": 8,
+ "infer_peak_gpu_mib": 434
+}

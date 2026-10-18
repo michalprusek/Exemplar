@@ -1,0 +1,83 @@
+{
+ "_what": "fine-tuned StarDist and micro-SAM fit times on the idle RTX A5000 (training call only, Table 1's training length), clean windows only: DSB2018 13:04-13:19, HRF re-run 20:3x-21:13 (the first HRF window was shared with another user's job and renamed *.contaminated.json).",
+ "sources": [
+  {
+   "file": "microsam_dsb2018.json",
+   "date": "2026-10-16 14:01",
+   "gpu_before": "0, NVIDIA A100 80GB PCIe, 63294 MiB, 100 %\n1, NVIDIA RTX A5000, 251 MiB, 0 %"
+  },
+  {
+   "file": "microsam_hrf_w2.json",
+   "date": "2026-10-16 21:13",
+   "gpu_before": "0, NVIDIA A100 80GB PCIe, 60012 MiB, 98 %\n1, NVIDIA RTX A5000, 746 MiB, 0 %"
+  },
+  {
+   "file": "stardist_dsb2018.json",
+   "date": "2026-10-16 13:42",
+   "gpu_before": "0, NVIDIA A100 80GB PCIe, 65428 MiB, 99 %\n1, NVIDIA RTX A5000, 251 MiB, 0 %"
+  },
+  {
+   "file": "stardist_hrf_w2.json",
+   "date": "2026-10-16 20:54",
+   "gpu_before": "0, NVIDIA A100 80GB PCIe, 56350 MiB, 96 %\n1, NVIDIA RTX A5000, 746 MiB, 0 %"
+  }
+ ],
+ "rows": [
+  {
+   "method": "micro-SAM",
+   "dataset": "dsb2018",
+   "side_px": 256,
+   "fit_s": 348.0,
+   "epochs": 50,
+   "lr": 1e-05,
+   "device": "NVIDIA RTX A5000",
+   "fit_s_all": [
+    389.4,
+    339.3,
+    348.0
+   ]
+  },
+  {
+   "method": "micro-SAM",
+   "dataset": "hrf",
+   "side_px": 3504,
+   "fit_s": 376.8,
+   "epochs": 50,
+   "lr": 1e-05,
+   "device": "NVIDIA RTX A5000",
+   "fit_s_all": [
+    376.8,
+    378.1,
+    348.3
+   ]
+  },
+  {
+   "method": "StarDist",
+   "dataset": "dsb2018",
+   "side_px": 256,
+   "fit_s": 473.4,
+   "epochs": 1600,
+   "lr": 0.0003,
+   "device": "NVIDIA RTX A5000",
+   "fit_s_all": [
+    496.6,
+    454.7,
+    473.4
+   ]
+  },
+  {
+   "method": "StarDist",
+   "dataset": "hrf",
+   "side_px": 3504,
+   "fit_s": 524.9,
+   "epochs": 1600,
+   "lr": 0.0003,
+   "device": "NVIDIA RTX A5000",
+   "fit_s_all": [
+    553.2,
+    509.0,
+    524.9
+   ]
+  }
+ ]
+}

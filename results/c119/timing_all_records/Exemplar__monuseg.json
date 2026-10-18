@@ -1,0 +1,76 @@
+{
+ "method": "Exemplar",
+ "dataset": "monuseg",
+ "k": 8,
+ "seed": 0,
+ "device": "NVIDIA RTX A5000",
+ "fit_s": 11.409,
+ "fit_kind": "measured (cold fit) + 8 coarse views",
+ "fit_detail": {
+  "definition": "cold fit from the 8 masks (magnification rule, fine view, priors, Gram matrices, lambda by Newton, held-out maps, blend choice), whose clock starts after the support's coarse views, PLUS 8 x the median coarse-view time measured on the timed test images",
+  "cold_s": 10.95,
+  "coarse_view_median_s": 0.0574,
+  "coarse_views_added_s": 0.459,
+  "refit_s": 2.08,
+  "refit_with_coarse_s": 2.137,
+  "zoom_changed": false,
+  "cold_parts": {
+   "pass": 9.0,
+   "skel": 0.0,
+   "gate": 0.0,
+   "features": 5.5,
+   "gram": 3.3,
+   "feat_coarse": 0.1,
+   "feat_priors": 1.31,
+   "feat_fine": 4.09,
+   "plain_newton_s": 0.28,
+   "plain_nlam": 3,
+   "plain": 0.32,
+   "plain_ex": 0.01,
+   "bal_newton_s": 0.31,
+   "bal_nlam": 3,
+   "bal": 0.32,
+   "bal_ex": 0.02,
+   "blend_ex": 0.012,
+   "reused": 0
+  },
+  "zoom": 2
+ },
+ "infer_idx": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "infer_s": [
+  0.7616,
+  0.7609,
+  0.7195,
+  0.7287,
+  0.7043
+ ],
+ "infer_mean_s": 0.735,
+ "infer_detail": {
+  "features_s": [
+   0.7585,
+   0.7581,
+   0.7169,
+   0.7258,
+   0.701
+  ],
+  "readout_s": [
+   0.0032,
+   0.0028,
+   0.0026,
+   0.003,
+   0.0032
+  ],
+  "warmup": "support image pool[11], untimed"
+ },
+ "source": [
+  "refit__monuseg.json",
+  "predict__monuseg.json"
+ ],
+ "protocol": ""
+}

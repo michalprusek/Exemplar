@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.egg-info/
+build/
+dist/
+.DS_Store
+.pytest_cache/
+# feature caches and downloaded benchmark data are large and reproducible
+cache/
+data/
+*.zip
+# paper/make_paper.sh output
+paper/out/
+
+# test images of the datasets (qualitative dumps): never redistributed
+results/c119/qual_v4/

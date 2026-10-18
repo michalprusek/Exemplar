@@ -1,0 +1,420 @@
+{
+ "make_semantic_tables.py": [
+  {
+   "old_lines": 4,
+   "old_sha256": "fc268eb3ea942428ab4bf03c2d602129a3664e3664c47ac3d2d394361b52710e",
+   "new": "The dataset order is frozen to match the paper. Run:\n  ASG_SEM_TREE=/path/to/results/final10 \\\n  ASG_SEM_OUT=<paper dir> python paper/make_semantic_tables.py\n\"\"\"\n"
+  },
+  {
+   "old_lines": 5,
+   "old_sha256": "653afe88a0bc0dbcefc8de7f663e8e6e28e4420ca889d54dbdd28f8521b98895",
+   "new": "# writes `tab_fewshot_k{K}.tex`, a drop-in for the same \\label, and never touches `tab_fewshot.tex`.\n# Added to render the table at one mask as well.\nK = int(os.environ.get(\"ASG_SEM_K\", \"8\"))\n# Which specialist records Table 1 prints.\n#   \"ft\"   each specialist fine-tuned on the eight support masks of every dataset, ten seeds: the\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "c1c0e9abfc611614f0993d977b6a9489e09494c898344bebaac21605a1d4bccb",
+   "new": "# Fine-tuned records exist at K=8 only, so any other K falls back to \"ots\" and says so.\n#   \"ftsem\" the same fine-tunes scored on the network's own foreground map:\n#          the default since 2026-10-12. Every metric of this table is semantic, and the instance\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "661f84e79665750d3e6a3fafa50ed7981748760c5ed7718750440f705abea9bd",
+   "new": "SPECIALISTS = (\"Cellpose-SAM\", \"StarDist\", \"micro-SAM\")\n# At ONE mask each fine-tuned specialist ran at two budgets: the rule\n# in epochs over the support, and the same number of gradient steps as at eight masks. The row prints\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "588fb81d0a0a8ff6d0dcc2d71afd166bb75dc87ef297b5be60e6bc31f76cc455",
+   "new": "# The score-directory stem of OUR column (`<stem>_k{K}` under ASG_SEM_TREE). `lean` is the method the paper\n# reported until 2026-10-14; `exemplar` is the method decided that day: the\n# fine view at the magnification decided from the support masks, registered to the patch grid, block 12 read\n"
+  },
+  {
+   "old_lines": 10,
+   "old_sha256": "da7a2acca0e2e254efbf075c61f0fa338b082b5158b0bc3311bfe1f3c862eb12",
+   "new": "OURS_STEM = os.environ.get(\"ASG_OURS_STEM\", \"lean\")\n# Each metric group ends with its own mean, so the table shows on which group our method is better. Block layout only;\n# the older layouts keep their rows.\nSPLIT = SPEC_MODE == \"ftsem\"\n# ASG_SEM_NO_K1=1 leaves out the panel mean at ONE mask (and its caption sentence). First used while our K=1 arm was\n# still running (the row must never print another method's K=1 under our header); the paper's Table 1 leaves the\n# one-mask row out (Fig. 2 shows K = 1), so the exemplar table is generated with it.\nNO_K1 = os.environ.get(\"ASG_SEM_NO_K1\", \"\") == \"1\"\n# ASG_SEM_FIT_ROW=1: a last row with each\n# column's fit time from the eight masks on one RTX A5000, from the smallest to the largest images (DSB2018 to HRF). Its\n"
+  },
+  {
+   "old_lines": 5,
+   "old_sha256": "18a87f923895f4e3343650322ac38da8d3a02b0f9b78c430e79bb41efd8f2418",
+   "new": "# table, unless it is named in ASG_SEM_FIT_UNTIMED (comma-separated column names): it then prints \"not timed\".\n# ASG_TYCHE_STEM=tyche_bestof: Tyche scored as in its paper, the one of its 16 candidates that best matches the test\n# mask by the dataset's metric (scripts/tyche_bench.py). Default `tyche` = the mean of the candidates, the earlier\n# column.\nTYCHE_STEM = os.environ.get(\"ASG_TYCHE_STEM\", \"tyche\")\n"
+  },
+  {
+   "old_lines": 6,
+   "old_sha256": "cfc947e30bf7dc0c321b87072a058a1baba140a9b40ef726666d86ba0cf773e0",
+   "new": "FIT_UNTIMED = [s for s in os.environ.get(\"ASG_SEM_FIT_UNTIMED\", \"\").split(\",\") if s]\n# ASG_SEM_FITINF=1: the last row prints, for EVERY column, the fit time and the inference time per image on the RTX\n# A5000, each the median over the eleven datasets (scripts/c119/timing_table.py -> numbers_fitinf.tex), \"--\" for the\n# fit of a forward-pass method. Overrides the DSB2018-to-HRF fit row.\nFITINF = os.environ.get(\"ASG_SEM_FITINF\", \"\") == \"1\"\n"
+  },
+  {
+   "old_lines": 4,
+   "old_sha256": "172bb647e0f3b7b1b57e130bf80ac0017e0e0d66c93bffd1515af4a1351a9430",
+   "new": "             \"micro-SAM\": (r\"\\msFitSmall--\\msFitLarge\\,min\", (\"msFitSmall\", \"msFitLarge\"))}\n# ASG_SEM_SIGMARKS=1 (off by default; the paper's table does not use it): a superscript asterisk on\n# every baseline cell that differs from Exemplar at a Holm-adjusted p < 0.05 in either direction, from the same families\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "6584b819214d039e2ce7bc52db67a1f7143bae000f5d1da15157b6508b934d67",
+   "new": "]\n# ASG_DROP_DS=ctc_u373 (the paper's setting: CTC-U373 is not reported, because its conditions need the CTC\n# organisers' permission for public use outside the challenge): the datasets named here are left out of every row and mean.\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "be7b3a763f3cd61be4eed244cd928db05909c844c869d92e8f91753b837ae698",
+   "new": "    one dir (this repo has already renamed its best method once: ``head_fusion_best_cgate_film`` ->\n    ``..._nobank``) would otherwise let a silent max() report whichever scored higher --\n    i.e. publish a number from a method the paper says was dropped. When a dir legitimately holds a base\n"
+  },
+  {
+   "old_lines": 4,
+   "old_sha256": "fcff2504e29650fe8229d923e9351e78b78430d9cffd4c229cf841caf4f8648b",
+   "new": "    run through `scripts/insid3_bench.py` on our split, our seeds and the same K=8 draw, with the\n    CRF refinement their published Chest X-ray number reproduces from -- 78.7 against their 78.8.\n    Their code default is bilinear and would understate them by 1.5 points.\n\n"
+  },
+  {
+   "old_lines": 4,
+   "old_sha256": "93f6781f3916b609a66165372262bc9104e317cbf150e3e02ab938a02e92bb04",
+   "new": "    \"\"\"(mean, deviation) of a summary row: the mean over the datasets (all, or one metric group) and its standard\n    deviation over seeds, the datasets averaged within each seed first, as in Table 2 (the Mean and the group means\n    get a deviation too). None when the column misses a dataset.\"\"\"\n    rows = [(ds, m) for ds, _, m in DATASETS if subset is None or m == subset]\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "00881a614271a5c67eb4c74eecae36e779da9a6625eadca45457b30aa4c5294d",
+   "new": "    fp = {n for lab, entries in GROUPS if lab.startswith(\"Forward pass\") for n, _, _ in entries}\n    if FITINF:                    # every column: median fit / median inference per image (c119/timing_table.py)\n        path = os.path.join(OUT, \"numbers_fitinf.tex\")\n"
+  },
+  {
+   "old_lines": 11,
+   "old_sha256": "57324eadef0674c8346318d2749475291f39ee86b5bb46281c72fb2882c34553",
+   "new": "MATCHER = \"Matcher\" if K == 1 else \"Matcher$^{\\\\dagger}$\"\n# ASG_SEM_NO_MATCHER=1 drops the Matcher column with its dagger and caption key: it was the only column run at another\n# support size than the table's, so the caption's \"Every method uses the same masks\" was false while it stood, and it\n# was the lowest column on every row.\nNO_MATCHER = os.environ.get(\"ASG_SEM_NO_MATCHER\", \"\") == \"1\"\n# Tyche scored by its best candidate against the test mask (ASG_TYCHE_STEM=tyche_bestof) is the most favourable condition\n# in the table, so its header carries a mark and the caption a key (an external review asked for it): an oracle number\n# must be visible where a reader scans the columns, not only in Baselines.\n# ASG_SEM_NO_TYCHE_MARK=1 (the caption repeated the Baselines paragraph): no mark on Tyche's header and no caption\n# note; the text says how Tyche is scored.\nTYCHE_MARK = \"\" if os.environ.get(\"ASG_SEM_NO_TYCHE_MARK\", \"\") == \"1\" else \\\n"
+  },
+  {
+   "old_lines": 7,
+   "old_sha256": "e7d69b8487bdfaf0c25900e0651c5e17bfad0e54dd452ec01915372f6046f9a1",
+   "new": "TYCHE = \"Tyche\" + TYCHE_MARK\n# ASG_SEM_CONVPAINT=1 (Prior-bank RF stays, Convpaint is added beside it): Convpaint (napari-convpaint 1.1.0,\n# combo_dino_vgg) as a column of the \"fitted without gradient descent\" block, score dir final10/convpaint_k8.\nCONVPAINT = os.environ.get(\"ASG_SEM_CONVPAINT\", \"\") == \"1\"\n# ASG_SEM_ILASTIK=1 (the paper's setting): the REAL ilastik 1.4.2 (final10/ilastik142_k8,\n# mean 0.634) takes the place of Prior-bank RF (final10/ilastik_k8, 0.595), which understates the ilastik workflow it\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "7cf57f26c174e3bb414add49e629965f4ebab086479e0c24ac15ef54eb48b8b1",
+   "new": "if SPEC_MODE == \"ftsem\":\n    # The block layout: every column used the same\n    # eight masks, and the blocks say what each method does with them. nnU-Net sits with the specialists\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "12e7e5d8a4209e86daad54343a45c0c8b29c0f51832c915e3ead67a43eec266d",
+   "new": "        # `lean_k8` (was `stripv3_k8` until the method was simplified on 2026-09-01), NOT `oursv3n_k8`. The latter is best_v3 WITH the competitive gate and FiLM,\n        # which the method no longer has: it scores 0.791 against the reported\n        # 0.789, so pointing here at it puts a different method in Table 1 from the one every\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "5dcb8b85cf79696f90bc474742c2eaec46243897f5776a10817f45feddbb9a62",
+   "new": "    # Since 2026-10-10 the specialist columns print the model FINE-TUNED on the same eight support\n    # masks, so every column of the table has used the same annotation. Their cells\n    # then carry a deviation over the ten support draws like every other column. Off the shelf\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "8964f36cb5ecb31b0a803f07d23bcb62dfb80dde898bed176ccf209dc31de9aa",
+   "new": "                         \"but no such record was found\")\n    # A CAPTION MAKES THE FLOAT READABLE ALONE; IT DOES NOT RE-ARGUE THE PAPER.\n    # The previous caption restated six things the body already says: the seed count (Experiments),\n"
+  },
+  {
+   "old_lines": 7,
+   "old_sha256": "3cf9f66bcc4963dd4bfc82d6db95e91ef335121508d85d11b66413727710bd8e",
+   "new": "    # claims the paper still makes, and a claim is no less worth checking for living in the prose.\n    # The short caption is kept HERE rather than only in the .tex, so a regeneration cannot\n    # silently restore the long version. Seed count still comes from EXPECT_SEEDS.\n    # The sentence \"INSID3 is the authors' released implementation, whose published anchor\n    # reproduces here; see Baselines\" left the caption on 2026-10-09. The Baselines\n    # paragraph says both things, so the caption was saying them a second time.\n"
+  }
+ ],
+ "make_stats.py": [
+  {
+   "old_lines": 3,
+   "old_sha256": "a25c1442e197c046aa06affaf86832f242214574681d92df570a3ab18a274725",
+   "new": "            (\"isbi2012em\", \"cldice\"), (\"fisbe\", \"cldice\")]\n# ASG_DROP_DS=ctc_u373 (the paper's setting: CTC-U373 is not reported, because its conditions need the CTC\n# organisers' permission for public use outside the challenge): the datasets named here are left out of every family.\n"
+  },
+  {
+   "old_lines": 5,
+   "old_sha256": "c411b0bf0959b7efe1af8d725c72cbeb5d1834d4aaf21c6012211390cc834a66",
+   "new": "OURS = f\"{OURS_STEM}_k8\"\n# ASG_TYCHE_STEM=tyche_bestof: Tyche scored as in its paper, the one of its 16 candidates that best matches the test\n# mask by the dataset's metric (scripts/tyche_bench.py). Default `tyche` = the mean of the candidates, the earlier\n# column.\nTYCHE_STEM = os.environ.get(\"ASG_TYCHE_STEM\", \"tyche\")\n"
+  },
+  {
+   "old_lines": 6,
+   "old_sha256": "4cc9614d9286606f1f44392546a74c467a80ba40fa574931f5128bef74178615",
+   "new": "                # authors' released implementation in the single configuration their published\n                # anchor reproduces from, not our own two-mode read-out.\n                \"INSID3\": \"insid3_k8\",\n                \"Matcher\": \"matcher_k1\"}\n# ASG_SEM_NO_MATCHER=1: Matcher left Table 1, so it leaves this family too.\nif os.environ.get(\"ASG_SEM_NO_MATCHER\", \"\") == \"1\":\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "de75cc95ffdb413403ed745ab329b6ac1115ac4886bd1f82355f81bce0c49609",
+   "new": "    nnU-Net, fine-tuned Cellpose-SAM, and Convpaint under ASG_SEM_CONVPAINT=1 (eleven comparisons each). Table 1's\n    generator marks these cells under ASG_SEM_SIGMARKS=1. Columns outside these families\n    (Prior-bank RF, StarDist, micro-SAM) are not tested and get no mark.\"\"\"\n"
+  },
+  {
+   "old_lines": 4,
+   "old_sha256": "5a351ad3896bf30424d466034f006311edf502a0519252b56b8207c4a38494af",
+   "new": "    # A dataset whose two means print the same in Table 1 (three decimals) is level: the reader counts the printed\n    # cells, and \"ahead on eight\" beside MoNuSeg 0.671 against 0.671 reads as a miscount (an external review noted it).\n    # The tests and their significance lists are unchanged.\n    dm = dict(DATASETS)\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "464481cf59f532950949c1280a7b6e38f5e6c6f011c19a98538573b60d0bb527",
+   "new": "                  f\"\\\\newcommand{{\\\\cpSigDs}}{{{names(cp_them)}}}\"]\n        # FAMILY 5b (ASG_SEM_CONVPAINT=1; Convpaint added to Table 1 as its own test family):\n        # ours vs Convpaint (combo_dino_vgg, final10/convpaint_k8) at eight masks, eleven comparisons.\n"
+  }
+ ],
+ "make_ablation_table.py": [
+  {
+   "old_lines": 3,
+   "old_sha256": "16fc664f34e678d11c047c6e2555c1c9a490e1e58f5dc99cad0121dbaa5160eb",
+   "new": "\n# ALL ELEVEN as of 2026-09-01 (the ablation is to be as complete as Table 1).\n# The seven-dataset panel this replaced was inherited, not chosen: it was the set the FIRST\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "48970359f2179e9005ef8607ba577a435d783594c0750274e0480c3779180a51",
+   "new": "            (\"isbi2012em\", \"cldice\"), (\"fisbe\", \"cldice\")]\n# ASG_DROP_DS=ctc_u373 (the paper's setting: CTC-U373 is not reported, because its conditions need the CTC\n# organisers' permission for public use outside the challenge): the datasets named here are left out of every mean.\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "0f14024cb8d207b453cdac2b85e3f1bb2df589a61cb66b74f7e3715f4ae0801e",
+   "new": "#\n# RE-BASED 2026-07-31, when the gate and FiLM were removed from the method. Two of\n# the arms did not have to move: `ablv3_nocls` and `ablv3_bank` carry neither `_cgate` nor `_film`,\n"
+  },
+  {
+   "old_lines": 7,
+   "old_sha256": "de0124a01cda9513f81f0d18ff70c643c35ef09c113548caea8d62f91662d27d",
+   "new": "#\n# The gate and FiLM arms were REMOVED from the table on 2026-08-24. They were shown as\n# a third \"measured and rejected\" block; with the paper no longer resting its contribution on the\n# self-configuration axis, two rows of rejected alternatives cost body lines that the argument needs\n# more. The arms themselves survive in the score tree (`ablv3_cgate_k8`, `ablv3_film_k8`), so the\n# measurement is retrievable without being reported.\n# Row label must match the prose name for this arm (\"the frozen features alone\"). It read\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "cdc66c30aed0b7fb21cf25c860132020832c3a02978180560ff71b40ad16c6ef",
+   "new": "# The two single-scale rows are the full method with one DINOv3 reading removed and the bank kept\n# (`_coarseonly`, `_fineonly`; written on the same machine as the full arm). The last row was\n# \"Both (Exemplar)\" while the table had two inputs; with scales in it \"both\" no longer says which.\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "f638e3a5f7ecde469b226f727f562c7bf4d7812083c9fd3505f2dc71ee7c6494",
+   "new": "# The SAME directory Table 1 reads, so the full row here is numerically identical to the row there.\n# ADDED 2026-08-25. Three components the paper advertises and Table 2 never measured.\n# They were NOT printed as table rows while the table showed MoNuSeg and DRIVE, because the whole\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "ef21f4aab0a3b57683aa1186debebed3c051de6f30658f117387e80feff8ea6f",
+   "new": "# the fusion-layer arm stays here. All three still feed the prose macros below.\n# RE-RUN IN THE LEAN CONFIGURATION 2026-09-02. The `ablv3_*` arms these replace are\n# the stripv3 method: subtracting them from `lean_k8` measured the method change, not the component,\n"
+  },
+  {
+   "old_lines": 4,
+   "old_sha256": "abf1a80885ad544185a865cd64256d7cdda4ae6eb2221578842f5869ad335cd1",
+   "new": "\n# ADDED 2026-10-09. The guided upsampler, as (control, ablated, macro). Its delta is\n# NOT taken against FULL_DIR. `lean_noup_k8` was run on a second machine, and there the reported method itself\n# moves by 0.0011 on the panel mean and by up to 0.0091 on one dataset (SpheroidJ), against an effect\n"
+  },
+  {
+   "old_lines": 6,
+   "old_sha256": "11917c92f14b2b57dafc2f0e7ab1b3e71b9b73f468316790e26a7c74719eeb7e",
+   "new": "# by md5 against this tree: `lean_k8`, `lean_nocls_k8` and the three COMPONENTS arms were all written\n# on a first machine, so their deltas are same-MACHINE subtractions too. They are not known to be same-GPU:\n# that machine has an A100 and an A5000, `lean_abl.sh` put coarse-only and fine-only on the first and no-mix\n# on the second, and no log records which card wrote `lean_k8`. `lean_bankonly_k8` is the copy\n# written on the SECOND machine, so the bank-only row of the table is cross-host against the full\n# row; its margins run from 0.003 to 0.3, and only the smallest (DSB2018) is near the host effect.\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "694cb88ea376606f4d4e78b4ef5fa268525db4edfc5582b6e8f9b70c7ef5faa1",
+   "new": "\n    # Component deltas for the prose. Signed as \"what the component is worth\", i.e. FULL minus\n    # the arm without it, so a positive number means the component helps.\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "e5e6bf64b81af6a009106c2a36f7906e87eb9fe1b4e6b61a4bd6a22239fcfe5e",
+   "new": "# ---------------------------------------------------------------------------------------------------------------\n# ASG_ABL_SET=exemplar: the table for the method reported since 2026-10-14. The `lean` path above\n# stays as it is: its prose guards (BANK_GAIN_ENDS, SAME_HOST_LARGEST, \"positive in every seed\") belong to sentences\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "5a4649705c5766ae041ef0e1cc1ab37b3301bd01069116bfdb1773c6657b0023",
+   "new": "# exactly that set difference: an arm run with any other string fails here instead of printing a plausible row.\n# All arms ran on one machine from one code tree with the final arm's job-to-card layout, so every difference is a\n# same-host subtraction (noise floor of one computation run twice: up to 0.009 on one dataset, 0.001 on the mean).\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "72db116482e9951b9de370c2b1c39336b590608495a525d183243b20d04cfbc1",
+   "new": "     (\"exemplar_fza_k8\", r\"Width rule only\", {\"fzm\"}, {\"fza\"}, \"WidthRule\", True)],\n    # Printed only once all eleven records of BOTH exist.\n    [(\"exemplar_nolf12_k8\", r\"Without the middle layer\", {\"lf12\"}, set(), \"NoMiddleLayer\", False),\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "77bdb78c5a48dbb99d477afc605c57ab5f50dd6754743ba71c2eb7ae1f7be91d",
+   "new": "# ---------------------------------------------------------------------------------------------------------------\n# ASG_ABL_SET=ridge: the table for the closed-form ridge, the method reported since\n# 2026-10-15. Input and magnification rows are separate runs of scripts/closed_form_bench.py with one ablation flag\n"
+  },
+  {
+   "old_lines": 8,
+   "old_sha256": "cfcee87b08e30f2dd4c68a6bd95e942ddac060f1ec053c021763c6a1e5d64986",
+   "new": "# readouts of the SAME fits (`alt` of ridge_k8): same Gram matrices, same lambda rule, another weighting or cut.\n# ASG_ABL_SET=ridge2: the same table for the final version of the method (v2, exact\n# leave-one-out with per-fold standardisation and weights, single precision), arms `final10/ridge2_*`; every record must\n# also carry loo_std=fold and precision=single.\n# ASG_ABL_SET=ridge3: v3 = v2 + the unified magnification rule (feature token fzu), every arm\n# run with the dataset's own held-out metric (--ex_metric dataset), arms `final10/ridge3_*`.\n# ASG_ABL_SET=ridge4: v4 = v3 + ONE blend readout a*w_plain + (1-a)*w_bal cut at 1/2 (primary blend1_ex),\n# arms `final10/ridge4_*`; the readout rows are the two ends of the blend (alt plain_mse = a 1, bal_mse = a 0).\n"
+  },
+  {
+   "old_lines": 6,
+   "old_sha256": "267a5f5c1d0ba272f8392c17abe06558b818c1420c12785ec544ef21515b33de",
+   "new": "     (f\"{RIDGE_STEM}_fineonly_k8\", None, r\"Fine view + priors\", \"FineOnly\", dict(blocks=\"fine,bank\", zoom_fixed=0))],\n    # the reading of the backbone: the last block only, without block 12 (feature string without _lf12)\n    [(f\"{RIDGE_STEM}_nolf12_k8\", None, r\"Last layer only\", \"LastLayerOnly\", dict(blocks=\"coarse,fine,bank\", zoom_fixed=0, feat_method=_FM.format(\"\"))),\n     (f\"{RIDGE_STEM}_nozoom_k8\", None, r\"Fine view not magnified\", \"NoZoom\", dict(blocks=\"coarse,fine,bank\", zoom_fixed=1))],\n    # the readout with a fixed threshold (alt of ridge_k8; restored after a review: no fixed\n    # setting serves both groups). The best held-out choice without the SE rule stays out of the table (prose).\n"
+  },
+  {
+   "old_lines": 8,
+   "old_sha256": "8ef0e8662753d44624f3eabe995ea530337f3add70be8835a03b26bdc3e71a95",
+   "new": "\n# ASG_ABL_FOREST=views,priors: a block with a random forest in place of the ridge, on the views (final10/views_rf_k8,\n# a copy of results/c114/views_rf_panel) and on the priors (final10/ilastik_k8 = Table 1's Prior-bank RF). With\n# \"Coarse + fine view only\" and \"Priors only\" above it, Table 2 then holds the 2x2 inputs x readout. Each record must\n# carry the dataset's metric, the seeds of the full arm and the split fingerprint of the full arm's record, or the\n# table is refused.\n# For ridge3 the views row reads final10/views_rf3_k8 (the forest on v3's views), and every views record\n# must carry the stem's feature string, so a forest on another magnification rule never fills the cell.\n"
+  }
+ ],
+ "make_final_kscale.py": [
+  {
+   "old_lines": 3,
+   "old_sha256": "96cd853a36930191d6bf8c06ef6ac46b1f96256387bddb93ae1f67dbfb08fd5b",
+   "new": "# `scores_fact/cgate_film` (written by `head_fusion_best_cgate_film` — bank-unfreeze ON, the lever\n# dropped earlier) while K=1/4/16 came from `_v2`, so the headline curve was not one method; and\n# after the harness fixes those old dirs still won over the recomputed ones, making the recomputation\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "7c9e1364b934486850be64aea51d0e2174ae886e15826d4e14c9d2cb7caf8255",
+   "new": "    # reports. Until every cell lands this raises rather than drawing a short curve.\n    # RE-POINTABLE 2026-10-14: ASG_OURS_STEM names the arm family, `lean` (default, the method\n    # reported until then) or `exemplar` (the method decided on 14 October). Same rule as Table 1's generator,\n"
+  },
+  {
+   "old_lines": 9,
+   "old_sha256": "90e975e3931af4414f55a62e386b32d94503d03a9c67aa31d1c94bb708d1dad2",
+   "new": "    # It is now the authors' released INSID3 in the configuration their published anchor\n    # reproduces from. CTC-U373 cannot supply K=16, which is why this figure\n    # averages ten datasets anyway.\n    \"INSID3\": {k: [f\"{FINAL}/insid3_k{k}\"] for k in (1, 4, 8, 16)},\n    # ADDED 2026-10-14 (a fair comparison runs the scaling for every specialist method too): the three specialists\n    # FINE-TUNED on the K support masks, semantic read-out, at all four K -- Table 1's columns. K=8 has one budget (the\n    # preset rule, which at K=8 is also the equal-steps one). K=1, 4 and 16 list\n    # their TWO budgets, the preset epochs-over-support rule and as many gradient steps as at K=8, and\n    # `BUDGET_CHOICE` below takes the one with the higher mean over the figure's ten datasets, per tool and K, as the\n"
+  },
+  {
+   "old_lines": 4,
+   "old_sha256": "82a1d9c9975e7c8796c2accf5b6a1cd7868e94f26ec658751adf28375bf50b85",
+   "new": "    # which baselines had even been measured — and the common set includes three datasets where\n    # the specialists win.\n    # 2026-10-14: the SEMANTIC records (Cellpose-SAM `cellprob > 0`, micro-SAM decoder\n    # foreground > 0.5, StarDist object probability), not the union of the instance masks, which scored these\n"
+  },
+  {
+   "old_lines": 5,
+   "old_sha256": "388a3702b9af497b0508dff6f0210bda6029cc6408df5daa3e5e86ae9f4a278d",
+   "new": "KS = [1, 4, 8, 16]\n# ASG_KSCALE_NO_FT=1: the fine-tuned specialists' K=4 and K=16 arms are left out of the figure (for a run before they\n# are complete, when their curves would break), and its caption must then not name them. Table 1 holds their K=8\n# scores.\nif os.environ.get(\"ASG_KSCALE_NO_FT\") == \"1\":\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "95d577e336c8a5032b2bbf489b7a2ddc8f1132f6016fee207a192dbd109f9e14",
+   "new": "STYLE = {\"Exemplar\": (\"#111111\", \"o\", 2.4), \"Tyche\": (\"#1f77b4\", \"s\", 1.4),\n         # INSID3 brown, not orange: beside nnU-Net's orange-red the two read as one colour (peer review)\n         \"UniverSeg\": (\"#2ca02c\", \"^\", 1.4), \"INSID3\": (\"#8c564b\", \"D\", 1.4),\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "2fcb0037599be845203527b12ab5771c6c33f8b1294cfeffa6817bb38e6f60c7",
+   "new": "        ls = \"--\" if method in TRAINS_ON_SUPPORT else \"-\"\n        # lines only, no point markers\n        ax.plot(KS, ys, color=c, lw=lw, ls=ls,\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "ed60ea0e87cd2a1936f11eeb302384d5de3b70836dbbc39252985d8a589f6943",
+   "new": "    print(f\"  ! y-limit raised to fit the data (max drawn {_top:.3f} > the default 0.85)\")\n# Lower limit: the largest multiple of 0.1 at or below the lowest drawn value, band included (with the three\n# fine-tuned specialists five curves crowd 0.6-0.84, and the empty strip under the lowest point only squeezes them).\n"
+  },
+  {
+   "old_lines": 4,
+   "old_sha256": "90c19aa03584ebdac01058b79735edce3df2b5570749a28a919ac8c37758c8c5",
+   "new": "L += [r\"\\definecolor{%s}{HTML}{%s}\" % (_ID[m], c.lstrip(\"#\").upper()) for m, c, *_ in _series]\n# ASG_KSCALE_HEIGHT (pt, default 58): the axis height; the paper's run sets its own (paper/make_paper.sh).\n_H = float(os.environ.get(\"ASG_KSCALE_HEIGHT\", \"58\"))\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "c99ffdd68d61cf337b8f53e1cab5a4ab074776d964c28ca3077db1320d6c84f1",
+   "new": "    pts = \" \".join(f\"({k},{y:.4f})\" for k, y in zip(KS, ys))\n    L.append(r\"\\addplot[%s, line width=%.2fpt, %smark=none] coordinates {%s};\"     # lines only\n             % (_ID[m], lw * _SC, \"dashed, \" if ls == \"--\" else \"\", pts))\n"
+  }
+ ],
+ "make_fig1_thumbs.py": [
+  {
+   "old_lines": 5,
+   "old_sha256": "1c0d37e1f6a5158f6f7ceedce5fabb0b500928ef048cc923e49b9170a9b0fa91",
+   "new": "\nThe image is a Decay test image, a decaying spheroid and its fragments, cropped closer than its Fig. 3 panel.\n\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "06ab06eb6d8ecde623b440013c90eae3c1b694595365b501da11280246ca1f86",
+   "new": "so the output thumbnail is a real prediction, never a drawing. Regenerate after the method's arms are re-run:\n  python paper/make_fig1_thumbs.py results/c119/qual_v4/rozpad_0.npz paper/out/figures [y0,x0,side]\n\"\"\"\n"
+  }
+ ],
+ "render_qual_grid.py": [
+  {
+   "old_lines": 3,
+   "old_sha256": "1a7933181175a5da9d3c73c81621c73f68f99c658763ca78c55e6270a41af5a9",
+   "new": "\"\"\"Fig. 3: Exemplar's predictions on eight datasets (2 x 4 panels), as red contours on the grey image; only the model's\nsegmentation is marked.\n\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "996b064be03a8e7b76d6b692534fb7ddb482c89660f4172347ccc1d468311c4c",
+   "new": "\n  python paper/render_qual_grid.py <dir with {ds}_{i}.npz> paper/out/figures/qual3\n\"\"\"\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "47600c7655c2d12a01319eb11330518a079607163658777acb853dcfdcb1b149",
+   "new": "    \"drive\": (\"drive_2\", None),\n    # ISBI2012-EM and FISBE: the dumped test image (of the first three) whose\n    # seed-0 score is closest to the dataset's seed-0 median, so a typical case, not the best one\n"
+  },
+  {
+   "old_lines": 4,
+   "old_sha256": "6a196fde92f3a7632b59fcf651339c95fc3631cb51d7cab1487ec3e45136ac54",
+   "new": "    \"fisbe\": (\"fisbe_1\", (132, 133, 420)),          # 0.853 against 0.840; the centre at native scale, filaments stay visible\n    # BBBC010 takes the panel of CTC-U373, which the paper does not report; chosen by the same rule (the dump is\n    # bit-identical to ridge4_k8's seed 0): 0.770 against the median 0.696\n    \"bbbc010\": (\"bbbc010_2\", None),\n"
+  }
+ ],
+ "make_timing_numbers.py": [
+  {
+   "old_lines": 4,
+   "old_sha256": "d98ee2a17a94e1816e2d97e33fdecdb04fd4f8dd22d7dbb45fc6d689bcae505a",
+   "new": "OUT = os.environ.get(\"ASG_SEM_OUT\", \"paper/out\")\n# ASG_TIMING_OURS: our rows from another record (the method of 2026-10-14), nnU-Net's still from SRC.\n# ASG_TIMING_CP: fine-tuned Cellpose-SAM's fit times, for the cost against the strongest specialist.\nOURS_SRC = os.environ.get(\"ASG_TIMING_OURS\")\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "bee93cb48d2adcd23899f73f9c4e776b9c3f1f579a1c439660802e311fca7526",
+   "new": "\n# ASG_TIMING_PENDING=1: for a run before the timing measurement has finished. Every timing macro\n# prints a visible placeholder, never another method's number, and audit_paper_numbers refuses the file.\n"
+  },
+  {
+   "old_lines": 4,
+   "old_sha256": "d5b9e64d7d2d6a6e55be6bb70562797124332951bcca247211fcda4463b87ec9",
+   "new": "if src_ours.get(\"fit_only\"):\n    # The closed-form ridge: fit and refit times only (no per-image prediction time from this record). nnU-Net and\n    # Cellpose-SAM against the cold fit, as before.\n    cp = {r[\"dataset\"]: r for r in json.load(open(CP_SRC))[\"rows\"]} if CP_SRC else {}\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "8b686ae1ed0e666724ea0e467505cf45105512e6521aee071b6483781b630544",
+   "new": "             f\"\\\\newcommand{{\\\\nnSmallMin}}{{{math.floor(nn['dsb2018']['fit_s'] / 60)}}}\",\n             # the coarse reading of one image (672-px input, the same backbone), measured on the same card (in\n             # float32 there; the ridge runs the backbone in bfloat16, so this is an upper bound)\n"
+  },
+  {
+   "old_lines": 4,
+   "old_sha256": "d963f1c0b5a3a38b884921486fb863dbf7cb5d833747869efcc331375de6f52d",
+   "new": "        # Cellpose-SAM's warm refit for an eighth of its 800-epoch budget, as an eighth of its fine-tune measured on an\n        # IDLE A5000: a lower bound in its favour (the per-call preparation is paid once in either). Used because\n        # the direct refit timing shared the card with another user's jobs.\n        lines += [f\"\\\\newcommand{{\\\\cpRefitSmall}}{{{math.floor(cs / 8)}}}\",\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "e6a8a82623251493b9faa82f97aa7684a3962c7d48eb33a654d0b2ff7eb7517e",
+   "new": "    if cpr_dir:\n        # Cellpose-SAM's warm refit 7->8 (scripts/c114/cellpose_refit.py --stage refit), on\n        # the same card: median over the draws, whole seconds, at the two ends of the field range.\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "398a5f12f4d444a61e5021279820babc329a53042000a1151359524fbbeeacb2",
+   "new": "    if spec_src:\n        # Fine-tuned StarDist and micro-SAM (scripts/c114/spec_ft_timing.py: the training call\n        # only, at Table 1's training length) for Table 1's fit-time row. Minutes rounded DOWN, as Cellpose-SAM's, so the\n"
+  },
+  {
+   "old_lines": 5,
+   "old_sha256": "e5beb835b6140ef3e87c38cd235a6f5f81b4ced689e12286b8ed2d75dc0fa9ae",
+   "new": "    if cvp_src:\n        # Convpaint: the training call, feature extractor on the GPU; per dataset the FASTER of CatBoost on the CPU and\n        # on the GPU, minutes rounded DOWN like the specialists', both in Convpaint's favour. Rows of\n        # convpaint_<ds>.json, merged.\n        def minutes_c(s):\n"
+  }
+ ],
+ "c119/timing_table.py": [
+  {
+   "old_lines": 2,
+   "old_sha256": "c357bba74590dc9d7c23efdfea3557aa1d1f9ac21ac8abccee70ecbfbd3b1cbf",
+   "new": "\"\"\"The timing campaign's records -> fit and inference time per method over the eleven datasets.\n\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "9db1f130446864f55e50c0d6cb5292099285cc00388d28b2e47c286092a4733b",
+   "new": "Usage: python timing_table.py <records dir> <out.json> <out.tex> [--partial]\n--partial: a method missing a dataset gets the\ncell \"\\\\dots\" (no mean over an incomplete set) and the prose ranges are written only when complete; every other refusal\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "e71e32a980ab36c0ec76ce96b6672baa6b618633d0b8be1c20fb5480976565fa",
+   "new": "\n# ASG_DROP_DS=ctc_u373 (the paper's setting: CTC-U373 is not reported, because its conditions need the CTC\n# organisers' permission for public use outside the challenge): the datasets named here are left out of every median.\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "c5cc4c30fd44b8de981bbbc9bdd44cce462e256164308b53ae5468e28406ef73",
+   "new": "    partial = \"--partial\" in sys.argv[4:]\n    # --nnunet_full: nnU-Net's\n    # column from the MEASURED full 100-epoch runs (time_nnunet.py --validate_full, records check-nnU-Net-full-run__*)\n"
+  },
+  {
+   "old_lines": 4,
+   "old_sha256": "930dc28fa6bbca208f086ab77219c3dce47b5ff2422abc892c4b68c2b6fa4699",
+   "new": "    nn_full = \"--nnunet_full\" in sys.argv[4:]\n    # --ilastik: the real ilastik 1.4.2 (time_ilastik.py, CPU of the A5000 host, card idle) as a column beside\n    # Prior-bank RF, for ASG_SEM_ILASTIK=1. --budgets: the shorter Cellpose-SAM fine-tunes (4 to 200 epochs)\n    # (\"Cellpose-SAM e<N>\"), summarised in the json only (no macro: never a Table 1 cell).\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "2f52c26d84793b3a543fef2421aeecdcd4993836e63d6215b5d310354668b38a",
+   "new": "        fit_mean = None if all(f is None for f in fits) else float(np.mean(fits))\n        # The table shows MEDIANS over the datasets: image sizes differ more than a hundredfold,\n        # so a mean is set by the two or three largest-image datasets for every method. Same statistic for every column;\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "4798eb97c7960e6f6b444b6eaac5e1761e3029805e396db3f755c63c2ff12e7c",
+   "new": "    # Ranges over the eleven datasets for the prose (numbers only, the unit is typed in the sentence). Each method's\n    # macros are written once that method is complete.\n    words = WORDS\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "6e2b490b6709c3c8025680ae5bdcae3a48bb4d296bc0ce1398c845e06420e944",
+   "new": "        lines += [rf\"\\newcommand{{\\cpFitLoMin}}{{{min(cpf) / 60:.0f}}}\", rf\"\\newcommand{{\\cpFitHiMin}}{{{max(cpf) / 60:.0f}}}\"]\n        lines += [rf\"\\newcommand{{\\cpFitMedMin}}{{{float(np.median(cpf)) / 60:.0f}}}\"]      # abstract\n        lines += [rf\"\\newcommand{{\\cpEighthLo}}{{{sig2(min(cp))}}}\", rf\"\\newcommand{{\\cpEighthHi}}{{{sig2(max(cp))}}}\",\n"
+  },
+  {
+   "old_lines": 3,
+   "old_sha256": "d557fa3c04890bfc68395a92c9d6a9a3d78183f9ef3f7a9f80e5fd7c0365116e",
+   "new": "        summary[\"_nnunet_full_run_check\"] = c\n        # The check: one full 100-epoch run on DSB2018 against the extrapolation of the same draw. The\n        # extrapolation leaves out the pauses between epochs (validation, checkpoint) and its epochs ran under another CPU\n"
+  }
+ ],
+ "c119/timing_common.py": [
+  {
+   "old_lines": 6,
+   "old_sha256": "6586c860ecdc8a44d2a7423b03499582cb9eb4970df64991255c6c9d609e2f78",
+   "new": "\"\"\"Fit and inference time of every Table 1 method on the RTX A5000 -- the shared protocol.\n\nTable 1's last row is \"fit time / inference time\" for every method over all eleven datasets, measured on the idle A5000\n(an idle CUDA context of another user's process is allowed when it shows no SM activity during the window).\n\n"
+  },
+  {
+   "old_lines": 4,
+   "old_sha256": "cba52b0f5c0b5a73e759407dc32680615d81b9898d4f45413caedf3557727cc9",
+   "new": "    SUPPORT image (never a test image); model construction, weight loading and data loading stay outside both clocks;\n  * one JSON record per (method, dataset), written atomically and NEVER over an existing file (a clean record was once\n    lost to an `rm -f` before a re-run).\n\"\"\"\n"
+  },
+  {
+   "old_lines": 2,
+   "old_sha256": "6f072ce4ae187058f3dc90514bf2fec368a73d187030424456c6f84ed6d0edb7",
+   "new": "\n# From here to base_record/finish_record: the campaign half, imported by the research code's timing scripts (not in this\n# repository). split() and metric() import active_segmenter, the research package, so this half cannot run here;\n# timing_table.py uses only DATASETS and record_path.\ndef split(ds):\n"
+  }
+ ]
+}

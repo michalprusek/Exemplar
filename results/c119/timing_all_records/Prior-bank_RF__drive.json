@@ -1,0 +1,149 @@
+{
+ "method": "Prior-bank RF",
+ "dataset": "drive",
+ "k": 8,
+ "seed": 0,
+ "support_idx": [
+  11,
+  1,
+  19,
+  7,
+  5,
+  4,
+  0,
+  8
+ ],
+ "pool": 20,
+ "n_test": 20,
+ "side_px": 584,
+ "device": "NVIDIA RTX A5000",
+ "argv": [
+  "scripts/c119/time_rf.py",
+  "--datasets",
+  "drive",
+  "--out",
+  "<path>/out"
+ ],
+ "date_start": "2026-10-17 07:52:56",
+ "loadavg_start": [
+  "31.61",
+  "32.22",
+  "32.99"
+ ],
+ "versions": {
+  "torch": "2.5.1+cu121",
+  "numpy": "2.4.6",
+  "scikit-learn": "1.9.1",
+  "scikit-image": "0.26.0",
+  "joblib": "1.6.0",
+  "sklearn_path": "<path>/__init__.py"
+ },
+ "protocol": "(scripts/c119/timing_common.py)",
+ "smoke": false,
+ "max_side": 1536,
+ "trees": 100,
+ "min_samples_leaf": 4,
+ "px_per_image": 20000,
+ "colour_feats": true,
+ "colour_mode_on": true,
+ "n_jobs": 8,
+ "rf_random_state": 0,
+ "threads_env": {
+  "OMP_NUM_THREADS": "8",
+  "MKL_NUM_THREADS": "8",
+  "OPENBLAS_NUM_THREADS": "8"
+ },
+ "torch_num_threads": 8,
+ "threadpools": [
+  {
+   "user_api": "openmp",
+   "internal_api": "openmp",
+   "num_threads": 8,
+   "prefix": "libgomp"
+  },
+  {
+   "user_api": "blas",
+   "internal_api": "openblas",
+   "num_threads": 8,
+   "prefix": "libscipy_openblas"
+  },
+  {
+   "user_api": "openmp",
+   "internal_api": "openmp",
+   "num_threads": 8,
+   "prefix": "libgomp"
+  },
+  {
+   "user_api": "blas",
+   "internal_api": "openblas",
+   "num_threads": 8,
+   "prefix": "libscipy_openblas"
+  }
+ ],
+ "cuda_context_init_s": 0.238,
+ "sources_md5": {
+  "time_rf.py": "af63d55cfb29340f86c55f4562206e28",
+  "timing_common.py": "63483eca42b53615990964971d5c63ad",
+  "ilastik_bench.py": "08c9b50f2fdc8dc073dec233b78623a4",
+  "hyperbank_bank.py": "524381a3e62d44170c8b2d5722b026de"
+ },
+ "infer_kind": "ilastik_bench._predict: bank on the GPU at max_side 1536 (+colour planes) + forest predict_proba (CPU, n_jobs 8) + bilinear resize to native size + > 0.5, numpy image in memory to binary mask at native size, GPU synchronised",
+ "fit_s": 17.602,
+ "fit_kind": "measured",
+ "fit_detail": {
+  "clock": "ilastik_bench._fit_rf: per support image the bank on the GPU at max_side 1536 (grey conversion, copy, downscale, bank, copy back, colour planes, finiteness check), mask resized to the feature grid, 10000 + 10000 class-balanced pixels; then RandomForestClassifier.fit (100 trees, min_samples_leaf 4, n_jobs 8)",
+  "outside": "building the bank module on the GPU; decide_mode (colour decision from the support); imports; one bank warm-up pass on a support image through a discarded extractor",
+  "n_features": 38,
+  "n_train_px": 160000,
+  "rf_params": {
+   "n_estimators": 100,
+   "min_samples_leaf": 4,
+   "n_jobs": 8,
+   "random_state": 0
+  },
+  "fit_peak_gpu_mib": 91,
+  "bank_warmup_s": 0.505,
+  "n_jobs_note": "the scored column ran --n_jobs 10 in two concurrent streams,; at a fixed random_state the trees do not depend on n_jobs"
+ },
+ "infer_idx": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "infer_s": [
+  0.7807,
+  0.6599,
+  0.5432,
+  0.7736,
+  0.5396
+ ],
+ "infer_mean_s": 0.6594,
+ "infer_fg_fraction": [
+  0.1226,
+  0.1439,
+  0.1432,
+  0.1294,
+  0.1308
+ ],
+ "warmup": {
+  "image": "support",
+  "pool_idx": 11,
+  "s": 0.642,
+  "fg_fraction": 0.1257
+ },
+ "date_end": "2026-10-17 07:53:18",
+ "loadavg_end": [
+  "35.08",
+  "32.89",
+  "33.19"
+ ],
+ "infer_peak_gpu_mib": [
+  91,
+  91,
+  91,
+  91,
+  91
+ ]
+}
