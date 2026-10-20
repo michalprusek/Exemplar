@@ -1,4 +1,4 @@
-# Copied from AutoSeg scripts/make_final_kscale.py (4cd0cd9) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
+# Copied from AutoSeg scripts/make_final_kscale.py (cb71f85) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
 """Build the final annotation-efficiency figure: mean SEMANTIC score over the ten datasets with full
 K coverage (all eleven but ctc_u373, whose pool of fifteen cannot supply K=16), for every method at
 K=1,4,8,16, with +/-1 std error bands across seeds. Blob/nucleus/worm/bacteria fields are scored on

@@ -61,14 +61,19 @@
    "new": "    run through `scripts/insid3_bench.py` on our split, our seeds and the same K=8 draw, with the\n    CRF refinement their published Chest X-ray number reproduces from -- 78.7 against their 78.8.\n    Their code default is bilinear and would understate them by 1.5 points.\n\n"
   },
   {
+   "old_lines": 5,
+   "old_sha256": "9fe0026fc876bed1d86c245b0591d5b32dc8ec5f9d686b082f26f6f776e41b8f",
+   "new": "    if SPEC_MODE == \"ftsem\":\n        # The deviation is set at the table's own 7 pt instead of \\tiny (5 pt); the width comes from dropping the thin\n        # space before it, a tabcolsep of 0.8 pt and the fit row's bare slash. The tabular stays inside the text block.\n        return core + r\"{\\scriptsize$\\pm\" + s + \"$}\"\n"
+  },
+  {
    "old_lines": 4,
    "old_sha256": "93f6781f3916b609a66165372262bc9104e317cbf150e3e02ab938a02e92bb04",
    "new": "    \"\"\"(mean, deviation) of a summary row: the mean over the datasets (all, or one metric group) and its standard\n    deviation over seeds, the datasets averaged within each seed first, as in Table 2 (the Mean and the group means\n    get a deviation too). None when the column misses a dataset.\"\"\"\n    rows = [(ds, m) for ds, _, m in DATASETS if subset is None or m == subset]\n"
   },
   {
    "old_lines": 3,
-   "old_sha256": "00881a614271a5c67eb4c74eecae36e779da9a6625eadca45457b30aa4c5294d",
-   "new": "    fp = {n for lab, entries in GROUPS if lab.startswith(\"Forward pass\") for n, _, _ in entries}\n    if FITINF:                    # every column: median fit / median inference per image (c119/timing_table.py)\n        path = os.path.join(OUT, \"numbers_fitinf.tex\")\n"
+   "old_sha256": "8fde7f199190643bc998036f4c4df521759b1e28d554967948c6475e7df1b881",
+   "new": "    slash = \"/\" if SPEC_MODE == \"ftsem\" else r\"\\,/\\,\"    # bare in ftsem: its width pays for the 7 pt deviations\n    if FITINF:                    # every column: median fit / median inference per image (c119/timing_table.py)\n        path = os.path.join(OUT, \"numbers_fitinf.tex\")\n"
   },
   {
    "old_lines": 11,
@@ -183,6 +188,11 @@
    "old_lines": 6,
    "old_sha256": "11917c92f14b2b57dafc2f0e7ab1b3e71b9b73f468316790e26a7c74719eeb7e",
    "new": "# by md5 against this tree: `lean_k8`, `lean_nocls_k8` and the three COMPONENTS arms were all written\n# on a first machine, so their deltas are same-MACHINE subtractions too. They are not known to be same-GPU:\n# that machine has an A100 and an A5000, `lean_abl.sh` put coarse-only and fine-only on the first and no-mix\n# on the second, and no log records which card wrote `lean_k8`. `lean_bankonly_k8` is the copy\n# written on the SECOND machine, so the bank-only row of the table is cross-host against the full\n# row; its margins run from 0.003 to 0.3, and only the smallest (DSB2018) is near the host effect.\n"
+  },
+  {
+   "old_lines": 4,
+   "old_sha256": "baf6272de8d414fc68854ca461397b3d20b5f8f827caadf5a47fd041e8138add",
+   "new": "        # The ridge table (three numeric columns) has room for the deviation at the table's own 7 pt instead of\n        # \\tiny (5 pt), without its leading zero and without the thin space, as tab:fewshot prints it.\n        if not 0 <= s < 1:\n"
   },
   {
    "old_lines": 3,

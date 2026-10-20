@@ -1,4 +1,4 @@
-# Copied from AutoSeg scripts/c119/timing_common.py (4cd0cd9) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
+# Copied from AutoSeg scripts/c119/timing_common.py (cb71f85) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
 """Fit and inference time of every Table 1 method on the RTX A5000 -- the shared protocol.
 
 Table 1's last row is "fit time / inference time" for every method over all eleven datasets, measured on the idle A5000

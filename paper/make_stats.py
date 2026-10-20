@@ -1,4 +1,4 @@
-# Copied from AutoSeg scripts/make_stats.py (4cd0cd9) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
+# Copied from AutoSeg scripts/make_stats.py (cb71f85) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
 """Paired per-image Wilcoxon with Holm correction, emitted as LaTeX macros for the manuscript.
 
 WHY THIS EXISTS. The paper describes its statistics -- paired Wilcoxon signed-rank on per-image

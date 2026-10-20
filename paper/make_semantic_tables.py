@@ -1,4 +1,4 @@
-# Copied from AutoSeg scripts/make_semantic_tables.py (4cd0cd9) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
+# Copied from AutoSeg scripts/make_semantic_tables.py (cb71f85) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
 """Emit the MERGED main semantic-comparison table for the paper, from the clean campaign tree.
 
 One Table 1 places our method against the budget-matched few-shot baselines (which see the
@@ -296,6 +296,10 @@ def render(v, is_best, sig=False):
         if "0." not in s:
             raise ValueError(f"deviation {s!r} is not below one; the short form would misprint it")
         s = s.replace("0.", ".", 1)
+    if SPEC_MODE == "ftsem":
+        # The deviation is set at the table's own 7 pt instead of \tiny (5 pt); the width comes from dropping the thin
+        # space before it, a tabcolsep of 0.8 pt and the fit row's bare slash. The tabular stays inside the text block.
+        return core + r"{\scriptsize$\pm" + s + "$}"
     return core + r"\,{\tiny$\pm" + s + "$}"
 
 
@@ -485,6 +489,7 @@ def fit_row(cols):
     """The fit-time row (ASG_SEM_FIT_ROW): macros only, each one checked to be defined in OUT/numbers_timing.tex, so
     a table can never reach the paper with a cell that compiles to nothing or to another method's time."""
     fp = {n for lab, entries in GROUPS if lab.startswith("Forward pass") for n, _, _ in entries}
+    slash = "/" if SPEC_MODE == "ftsem" else r"\,/\,"    # bare in ftsem: its width pays for the 7 pt deviations
     if FITINF:                    # every column: median fit / median inference per image (c119/timing_table.py)
         path = os.path.join(OUT, "numbers_fitinf.tex")
         defined = set(re.findall(r"\\newcommand\{\\(\w+)\}", open(path).read())) if os.path.exists(path) else set()
@@ -495,7 +500,7 @@ def fit_row(cols):
             if key is None or any(m not in defined for m in need):
                 missing.append(f"{n}: {need if key else 'no FITINF_KEYS entry'}")
                 continue
-            cells.append(("--" if n in fp else rf"\tfit{key}") + r"\,/\," + rf"\tinf{key}")
+            cells.append(("--" if n in fp else rf"\tfit{key}") + slash + rf"\tinf{key}")
         if missing:
             raise SystemExit(f"REFUSING to write the fit / inference row ({path}):\n  " + "\n  ".join(missing))
         return "\n" + r"\midrule" + "\n" + r"Fit\,/\,image & " + " & ".join(cells) + r" \\"
@@ -839,7 +844,7 @@ def emit_merged():
 \centering
 \caption{""" + caption + r"""}
 \label{tab:fewshot}
-{\scriptsize\setlength{\tabcolsep}{""" + ("1.1pt" if SPEC_MODE == "ftsem" else "1.2pt") + r"""}
+{\scriptsize\setlength{\tabcolsep}{""" + ("0.8pt" if SPEC_MODE == "ftsem" else "1.2pt") + r"""}
 \begin{tabular}{""" + COLSPEC + r"""}
 \toprule
 """ + GROUP_ROW + r""" \\

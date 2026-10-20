@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copied from AutoSeg scripts/make_timing_numbers.py (4cd0cd9) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
+# Copied from AutoSeg scripts/make_timing_numbers.py (cb71f85) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
 """Emit every timing number the paper states, as macros, from results/timing_a5000.json.
 
 WHY THIS EXISTS. The accuracy tables and the statistics have been script-generated for months, but

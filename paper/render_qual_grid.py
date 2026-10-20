@@ -1,4 +1,4 @@
-# Copied from AutoSeg scripts/render_qual_grid.py (4cd0cd9) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
+# Copied from AutoSeg scripts/render_qual_grid.py (cb71f85) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
 """Fig. 3: Exemplar's predictions on eight datasets (2 x 4 panels), as red contours on the grey image; only the model's
 segmentation is marked.
 

@@ -1,4 +1,4 @@
-# Copied from AutoSeg scripts/make_fig1_thumbs.py (4cd0cd9) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
+# Copied from AutoSeg scripts/make_fig1_thumbs.py (cb71f85) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
 """Fig. 1's two thumbnails: a crop of one test image and Exemplar's predicted foreground on the same crop.
 
 The image is a Decay test image, a decaying spheroid and its fragments, cropped closer than its Fig. 3 panel.

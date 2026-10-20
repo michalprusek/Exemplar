@@ -1,4 +1,4 @@
-# Copied from AutoSeg scripts/c119/timing_table.py (4cd0cd9) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
+# Copied from AutoSeg scripts/c119/timing_table.py (cb71f85) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
 """The timing campaign's records -> fit and inference time per method over the eleven datasets.
 
 Writes <json> (the summary, per method and per dataset) and <tex> (macros \\tfit<Key>, \\tinf<Key> for Table 1's last row,

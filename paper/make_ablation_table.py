@@ -1,4 +1,4 @@
-# Copied from AutoSeg scripts/make_ablation_table.py (4cd0cd9) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
+# Copied from AutoSeg scripts/make_ablation_table.py (cb71f85) by tools/sync_paper.py; default paths adapted, internal notes rewritten in comments and docstrings.
 """Emit the paper's component-ablation table (Table 2) from the clean campaign tree.
 
 TWO blocks, because the paper makes two different claims and one table row cannot carry both:
@@ -230,11 +230,17 @@ def macro_tag(ds):
     return "".join(c for c in ds.replace("_", "").capitalize() if c.isalpha())
 
 
-def fmt(m, s, bold=False):
+def fmt(m, s, bold=False, short=False):
     # Deviations set \tiny and split off the mean, the same shape tab:fewshot uses. With four numeric
     # columns the inline `0.517{\pm}0.010` form ran 48 pt past \columnwidth and spilled into the
     # neighbouring column; this recovers the width without dropping a column or a digit.
     mean = f"{{\\boldmath${m:.3f}$}}" if bold else f"${m:.3f}$"
+    if short:
+        # The ridge table (three numeric columns) has room for the deviation at the table's own 7 pt instead of
+        # \tiny (5 pt), without its leading zero and without the thin space, as tab:fewshot prints it.
+        if not 0 <= s < 1:
+            raise ValueError(f"deviation {s!r} is not below one; the short form would misprint it")
+        return f"{mean}{{\\scriptsize$\\pm{s:.3f}$}}".replace("$\\pm0.", "$\\pm.", 1)
     return f"{mean}\\,{{\\tiny$\\pm{s:.3f}$}}"
 
 
@@ -707,7 +713,7 @@ def main_ridge():
     assert_paired()
     allrows = [r for b in blocks for r in b] + [(RIDGE_FULL, r"Exemplar", "Full", full)]
     best = [max(r[3][i][0] for r in allrows) for i in range(3)]
-    cell = lambda v, i: fmt(v[0], v[1], v[0] == best[i])
+    cell = lambda v, i: fmt(v[0], v[1], v[0] == best[i], short=True)
     lines = []
     for b in blocks:
         lines += [f"{label} & " + " & ".join(cell(v, i) for i, v in enumerate(vals)) + r" \\" for _, label, _, vals in b]
